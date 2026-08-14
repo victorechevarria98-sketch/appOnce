@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<!-- menu principal trabajador -->
+<html>
+    <head>
+        <title>Bienvenido</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="estilocss.css"/>
+    </head>
+    <body>
+        <!-- no te olvides de que los href pasan por el servlet no la pagina html -->
+        <!-- lista pedido suyos --> 
+
+        <h1> Menu Principal</h1>
+        <details>
+            <summary>Menú de Usuario</summary>
+            <div>
+                <ul>
+                    <li><a href="ServletPaginacion?vista=pedidotrabajador">Tus pedidos</a></li> <!-- NO ESTA HECHO -->
+                    <li><a href="ServletLecturaNombre?vista=nuevopedido">Nuevo Pedido</a></li>
+                    <li><a href="ServletLecturaNombre?vista=nuevaincidencia">Nueva Incidencia</a></li>
+                    <li><a href="ServletLecturaNombre?vista=tuperfil">Tu Perfil</a></li>
+                </ul>
+            </div>
+        </details>
+        <table>
+            <h2> Ultimos pedidos</h2>
+            <thead>
+                <tr>
+                    <th>Fecha:</th>
+                    <th>Articulo:</th>
+                    <th>Tipo:</th>
+                    <th>Numero de serie:</th>
+                    <th>pedido de:</th>
+                    <th>precio:</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#tabla}}
+                <tr>
+                    <td>{{fecha}}</td>
+                    <td>{{articulo}}</td>
+                    <td>{{tipo}}</td>
+                    <td>{{serie}}</td>
+                    <td>{{pedido}}</td>
+                    <td>{{precio}}</td>
+                    <td>
+<!-- vista es el menu principal y operacion el if dentro de esa opcion dependiendo de si edita o borra.  -->
+<!-- tipo para rasca y cupon ya que la listas son ditintas y añaden un valor pra diferenciar datos y admin no -->
+                        <a href="ServletLecturaNombre?vista=editar&operacion=editarpedido&idpedido={{id_pedido}}&tipo={{tipo}}">✏️Editar</a> 
+                        <a href="ServletLecturaNombre?vista=eliminar&operacion=eliminarpedido&idpedido={{id_pedido}}&tipo={{tipo}}">🗑️Borrar</a>
+                    </td>
+                </tr>
+                {{/tabla}}
+                {{^tabla}}
+                <tr>
+                    <td colspan="6" class="no-data">No hay pedidos guardados.</td>
+                </tr>
+                {{/tabla}}
+            </tbody>
+        </table>
+
+    </body>
+</html>

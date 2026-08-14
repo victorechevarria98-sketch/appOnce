@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<!-- menu principal admin -->
+<html>
+    <head>
+        <title>Bienvenidos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="estilocss.css"/>
+    </head>
+    <body>
+     
+        <!-- seleccionar pedidos totales -->
+        <!-- seleccionar pedidos suyos -->
+        <!-- seleccionar incidencias -->
+        <!-- nuevo rasca y cupon -->
+        <h1> Menu Principal</h1>
+        <details>
+            <summary>Menú de Usuario</summary>
+            <div>
+                <ul>
+                    <li><a href="ServletPaginacion?vista=listapedidostotal&pagina=0">Lista de pedidos totales</a></li> <!-- NO ESTA HECHO -->
+                    <li><a href="ServletPaginacion?vista=listausuarios&pagina=0">Lista de Perfiles de Trabajadores</a></li> 
+                    <li><a href="ServletPaginacion?vista=listaincidencia&pagina=0">Lista de Incidencias</a></li> <!-- NO ESTA HECHO -->
+                    <li><a href="ServletPaginacion?vista=listalugares&pagina=0">Lista de Lugares de trabajo</a></li> <!-- NO ESTA HECHO -->
+                    <li><a href="ServletPaginacion?vista=productos&pagina=inicio">Productos</a></li> 
+                    <li><a href="ServletLecturaNombre?vista=nuevaincidencia">Nueva Incidencia</a></li>
+                    <li><a href="ServletLecturaNombre?vista=nuevopedido">Nuevo Pedido</a></li>                    
+                    <li><a href="ServletUsuariosProductos?vista=nuevoproducto&pagina=inicio">Nuevo producto</a></li>
+                    <li><a href="ServletLecturaNombre?vista=tuperfil">Tu Perfil</a></li>
+                </ul>
+            </div>
+        </details>
+        <table>
+            <h2> Ultimos pedidos Cupones</h2>
+            <thead>
+                <tr>
+                    <th>Trabajador:</th>
+                    <th>Fecha:</th>
+                    <th>Cupon:</th>
+                    <th>Numero de serie:</th>
+                    <th>pedido de:</th>
+                    <th>precio:</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#tablacupon}}
+                <tr>
+                    <td>{{Trabajador}}</td>
+                    <td>{{fechacupon}}</td>
+                    <td>{{cupon}}</td>
+                    <td>{{serie}}</td>
+                    <td>{{pedido}}</td>
+                    <td>{{precio}}</td>
+                    <td>
+                        <a href="ServletLecturaNombre?vista=editar&operacion=editarpedidocupon&idpedidocupon={{id_pedidocupon}}">✏️Editar</a> 
+                        <a href="ServletLecturaNombre?vista=eliminar&operacion=eliminarpedidocupon&idpedidocupon={{id_pedidocupon}}">🗑️Borrar</a>
+                    </td>
+                </tr>
+                {{/tablacupon}}
+                {{^tablacupon}}
+                <tr>
+                    <td colspan="6" class="no-data">No hay pedidos guardados.</td>
+                </tr>
+                {{/tablacupon}}
+            </tbody>
+        </table>
+        <table>
+            <thead>
+            <h2> Ultimos pedidos Rascas</h2>
+            <tr>
+                <th>Trabajador:</th>
+                <th>Fecha:</th>
+                <th>Rasca:</th>
+                <th>Numero de serie:</th>
+                <th>pedido de:</th>
+                <th>precio:</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#tablarasca}}
+            <tr>
+                <td>{{Trabajador}}</td>
+                <td>{{fecharasca}}</td>
+                <td>{{rasca}}</td>
+                <td>{{serie}}</td>
+                <td>{{pedido}}</td>
+                <td>{{precio}}</td>
+                <td>
+                    <a href="ServletLecturaNombre?vista=editar&operacion=editarpedidorasca&idpedidorasca={{id_pedidorasca}}">✏️Editar</a> 
+                    <a href="ServletLecturaNombre?vista=eliminar&operacion=eliminarpedidorasca&idpedidorasca={{id_pedidorasca}}">🗑️Borrar</a>
+                </td>
+            </tr>
+            {{/tablarasca}}
+            {{^tablarasca}}
+            <tr>
+                <td colspan="4" class="no-data">No hay pedidos guardados.</td>
+            </tr>
+            {{/tablarasca}}
+        </tbody>
+    </table>
+
+</body>
+</html>

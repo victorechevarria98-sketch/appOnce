@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!-- login principal de usuario con email y contraseña -->
+<html>
+    <head>
+        <title>Login</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="estilocss.css"/>
+    </head>
+    <body>
+        <h2>Por favor introduce tu nombre de usuario y contraseña</h2>
+        <form action="OnceServer" method="post"> <!-- ServletLogin es su nombre .java -->
+            <label for="nombreusuario">Email de ususario:</label>
+            <input type="email" id="nombreusuario" name="nombreusuario" required>
+            <label for="passwordusuario">Contraseña:</label>
+            <input type="password" id="passwordusuario" name="passwordusuario" required>
+            <button type="submit">😃</button>
+            <button type="reset">😣</button>
+        </form>
+        <p>
+            <!-- creamos nuevo usuario y lo llevamos al menu principal directamente -->
+            <a href="newlogin.html">¿Eres un nuevo trabajador? </a>
+
+        </p>
+    </body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <title>lista de Perfiles</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="estilocss.css"/>
+    </head>
+    <h1>De acuerdo {{usuario.nombreUsu}}, ¿Que quieres hacer?</h1>
+    <body>
+        <details>
+            <summary>Menú de Usuario</summary>
+            <div>
+                <ul>
+                    <li><a href="ServletPaginacion?vista=listapedidostotal&pagina=0">Lista de pedidos totales</a></li> <!-- NO ESTA HECHO -->
+                    <li><a href="ServletPaginacion?vista=listausuarios&pagina=0">Lista de Perfiles de Trabajadores</a></li> <!-- NO ESTA HECHO -->
+                    <li><a href="ServletPaginacion?vista=listaincidencia&pagina=0">Lista de Incidencias</a></li> <!-- NO ESTA HECHO -->
+                    <li><a href="ServletPaginacion?vista=listalugares&pagina=0">Lista de Lugares de trabajo</a></li> <!-- NO ESTA HECHO -->
+                    <li><a href="ServletPaginacion?vista=productos&pagina=inicio">Productos</a></li> 
+                    <li><a href="ServletLecturaNombre?vista=nuevaincidencia">Nueva Incidencia</a></li>
+                    <li><a href="ServletLecturaNombre?vista=nuevopedido">Nuevo Pedido</a></li>
+                    <li><a href="ServletLecturaNombre?vista=nuevopedido">Nuevo Pedido</a></li>
+                    <li><a href="ServletLecturaNombre?vista=tuperfil">Tu Perfil</a></li>
+                </ul>
+            </div>
+        </details>
+        <table>
+            <h2> Ultimos pedidos Cupones</h2>
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Trabajador</th>
+                    <th>Correo</th>
+                    <th>Perfil</th>
+                    <th>Revisar Usuario</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#tabla}}
+                <tr>
+                    <td>{{usuario}}</td>
+                    <td>{{trabajador}}</td>
+                    <td>{{email}}</td>
+                    <td>{{perfil}}</td>
+                    <td>
+                        <a href="ServletUsuariosProductos?vista=editar&operacion=editarusuario&idusuario={{idusuario}}">✏️Editar</a> 
+                        <a href="ServletLecturaNombre?vista=eliminar&operacion=eliminarusuario&idusuario={{idusuario}}">🗑️Borrar</a>
+                    </td>
+                </tr>
+                {{/tabla}}
+            </tbody>  
+
+
+            <thead>
+                <tr>
+                    <th>DNI/NIF</th>
+                    <th>Activo</th>
+                    <th>Telefono</th>
+                    <th>Baja Laboral</th>
+                    <th>Revisar Trabajador</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#tabla}}
+                <tr>
+                    <td>{{DNI}}</td>
+                    <td>{{cuentaactiva}}</td>
+                    <td>{{telefono}}</td>
+                    <td>{{baja}}</td>
+                    <td>
+                        <a href="ServletUsuariosProductos?vista=editar&operacion=editartrabajador&idtrabajador={{idtrabajador}}">✏️Editar</a> 
+                        <a href="ServletLecturaNombre?vista=eliminar&operacion=eliminartrabajador&idtrabajador={{idtrabajador}}">🗑️Borrar</a>
+                    </td>
+                </tr>
+                {{/tabla}}
+                {{^tabla}}
+                <tr>
+                    <td colspan="8" class="no-data">No hay pedidos guardados.</td>
+                </tr>
+                {{/tabla}}
+            </tbody>
+        </table>
+        <form action="ServletPaginacion" method="get">
+            {{#primera}}
+            <button type="submit" value="0" name="pagina">⏮️</button>
+            <button type="submit" value="anterior" name="pagina">⬅️</button>    
+            {{/primera}}
+            <input type="hidden" name="vista" value="listausuarios">
+            <input type="hidden" name="paginaactual" value="{{pagina}}">
+            <input type="text" value=" Pag. {{pagina}}" disabled>
+            {{#ultima}}
+            <button type="submit" value="siguiente" name="pagina">➡️</button>
+            <button type="submit" value="ultimapagina" name="pagina">⏩</button>
+            {{/ultima}}
+        </form>
+    </body>
+</html>

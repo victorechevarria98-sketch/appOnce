@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Perfil</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="estilocss.css"/>
+    </head>
+    <body>
+        <h1>Buenos dias {{nombreusu}}, ¿que quiers hacer hoy?</h1>
+        <details>
+            <div>
+                <ul>
+                    <li><a href="ServletMenuPrincipal">Menu principal</a></li>
+                    <li><a href="ServletLecturaNombre?vista=editar&operacion=editarcontraseña&idusuario={{usuario.idusu}}">¿quieres cambiar la contraseña?</a></li>
+                </ul>
+            </div>
+        </details>
+        <h2> Perfil</h2>
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>DNI o NIF</th>
+                    <th>Fecha de Nacimiento</th> 
+                    <th>Fecha de Inicio de Contrato</th> 
+                    <th>Teléfono</th>                    
+                </tr>
+            </thead>
+            <tbody>
+                {{#trabajador}}
+                <tr>
+                    <td>{{trabajador.nombreTrab}}</td>
+                    <td>{{trabajador.apellidosTrab}}</td>
+                    <td>{{trabajador.NIF_Trab}}</td>
+                    <td>{{trabajador.fechaNaTrab}}</td>
+                    <td>{{trabajador.fechaIncorTrab}}</td>
+                    <td>{{trabajador.tldEmp}}</td>                   
+                </tr>
+                {{/trabajador}} 
+            </tbody>
+
+            <!-- BLOQUE 2: DATOS LABORALES -->
+            <thead>               
+                <tr>
+                    <th>Baja Laboral</th> 
+                    <th>Tipo Puesto</th> 
+                    <th>Tipo Contrato</th> 
+                    <th>Continuidad Kiosko</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#trabajador}}
+                <tr>
+                    <td>{{trabajador.bajaLaboral}}</td>
+                    <td>{{trabajador.tipoKiosko}}</td>
+                    <td>{{trabajador.tipoContrato}}</td>
+                    <td>{{trabajador.tipoActividad}}</td>
+                    <td>
+                        <a href="ServletLecturaNombre?vista=editar&operacion=editartrabajador&idtrabajador={{trabajador.idtrab}}">✏️Editar</a> 
+                        <a href="ServletLecturaNombre?vista=eliminar&operacion=eliminartrabajador&idtrabajador={{trabajador.idtrab}}">🗑️Borrar</a>
+                    </td>
+                </tr>
+                {{/trabajador}}  
+                {{^trabajador}}
+                <tr>
+                    <td colspan="5" class="no-data">No hay Trabajador guardado.</td>
+                </tr>
+                {{/trabajador}}               
+            </tbody>
+        </table>
+
+        <h2> Usuario</h2>
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Activo</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#usuario}}
+                <tr>
+                    <td>{{usuario.nombreUsu}}</td>
+                    <td>{{usuario.emailUsu}}</td>
+                    <td>{{usuario.activo}}</td>
+                    <td> <!-- para el case de lecturanombre -->
+                        <a href="ServletLecturaNombre?vista=editar&operacion=editarusuario&idusuario={{usuario.idusu}}">✏️Editar</a> 
+                        <a href="ServletLecturaNombre?vista=eliminar&operacion=eliminarusuario&idusuario={{usuario.idusu}}">🗑️Borrar</a>
+                    </td>
+                </tr>
+                {{/usuario}}
+                {{^usuario}}
+                <tr>
+                    <td colspan="4" class="no-data">No hay usuario guardado.</td>
+                </tr>
+                {{/usuario}}               
+            </tbody>
+        </table>
+
+
+        <h2> Puesto de trabajo</h2>
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Calle</th>
+                    <th>Municipio</th>
+                    <th>Codigo Postal</th>
+                    <th>Opciones</th>                    
+                </tr>
+            </thead>
+            <tbody>
+                {{#lugar}}
+                <tr>
+                    <td>{{calle}}</td>
+                    <td>{{municipio}}</td>
+                    <td>{{codPostal}}</td>
+                    <td>
+                        <a href="ServletLecturaNombre?vista=editar&operacion=editarlugar&idlugar={{idlugar}}">✏️Editar</a> 
+                        <a href="ServletLecturaNombre?vista=eliminar&operacion=eliminarlugar&idlugar={{idlugar}}">🗑️Borrar</a>
+                    </td>                    
+                </tr>
+                {{/lugar}}
+                {{^lugar}}
+                <tr>
+                    <td colspan="4" class="no-data">No hay un puesto guardado guardados.</td>                   
+                </tr>
+                {{/lugar}}               
+            </tbody>
+        </table>
+
+    </body>
+</html>

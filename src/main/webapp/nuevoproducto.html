@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Nuevo Producto</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="estilocss.css"/>
+    </head>
+    <body>
+        {{#inicio}}
+        <form action="ServletUsuariosProductos" method="get">
+            <h2>¿que lista quieres ver?</h2>
+            <input type="hidden" value="nuevoproducto" name="vista">
+            <button type="submit" value="rasca" name="producto">RASCA</button>
+            <button type="submit" value="cupon" name="producto">CUPON</button>
+        </form>
+        {{/inicio}}
+
+        {{#nuevo}}
+        <form action="ServletUsuariosProductos" method="get">
+            <h1>Bienvenido {{nombreusu}}, Introduzca los datos de su nuevo producto </h1>
+            {{#rasca}}
+            <input type="hidden" value="rasca" name="producto">
+            {{/rasca}}        
+            {{#cupon}}
+            <input type="hidden" value="cupon" name="producto">
+            {{/cupon}}
+    
+            <label for="producto">Producto:</label>
+            <input type="text" id="producto" name="nombre" maxlength="40" required>
+
+            <label for="precio">Precio (€):</label>
+            <input type="number" id="precio" name="precio" min="0" step ="0.01" placeholder="0.50" required>
+            
+            <button type="submit" value="insert" name="vista">OK</button>
+
+        </form>
+        {{/nuevo}}
+
+
+        
+
+
+    </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+
+<!-- nuevo trabajador donde NO incuyo lo relacionado al contrato ni kiosko que se hara en perfil -->
+<html>
+    <head>
+        <title>Login</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="estilocss.css"/>
+    </head>
+    <body>
+        <h1>Por favor, Introduce un nuevo usuario</h1>
+        <form action="UsuarioNuevo" method="post"> <!-- Servletusuarionuevo -->
+
+            <label for="nombretrabajador">Introduce tu nombre:</label> <!-- dato clase trabajador -->
+            <input type="text" id="nombretrabajador" name="nombretrabajador" maxlength="20" required>
+
+            <label for="apellidoseusuario">Introduce tus Apellidos</label> <!-- dato clase trabajador -->
+            <input type="text" id="apellidoseusuario" name="apellidoseusuario" maxlength="20" required>
+
+            <label for="emailusuario">Introduce tu correo electronico</label> <!-- dato clase usuario -->
+            <input type="email" id="emailusuario" name="emailusuario" maxlength="50" required>
+
+            <label for="perfil">Escribe o selecciona tu perfil:</label> <!-- dato clase usuario -->
+            <input list="perfil" name="perfil" id="perfil" required>
+            <datalist id="perfil">
+                <option value="admin">
+                <option value="trabajador">
+            </datalist>
+
+            <label for="dni">Escribe tu DNI/NIF:</label> <!-- dato clase trabajador -->
+            <input type="text" id="dni" name="dni" placeholder="12345678Z o X1234567L" pattern="[XYZxyz]?\d{7,8}[A-Za-z]" maxlength="9" title="Introduce un formato válido de DNI, NIE o NIF" required>
+
+            <label for="fechanacimineto">¿Cual es tu fecha de nacimiento?</label> <!-- dato clase trabajador -->
+            <input type="date" id="fechanacimineto" name="fechanacimineto">
+
+            <label for="fechacontrato">¿En que fecha vas a empezar a trabajar?</label> <!-- dato clase trabajador -->
+            <input type="date" id="fechacontrato" name="fechacontrato" required>
+
+            <label for="telefonoempresa">TLF empresa:</label> <!-- dato clase trabajador -->
+            <input type="tel" id="telefonoempresa" name="telefonoempresa"> 
+
+            <label for="passwordusuario">Introduce una Contraseña:</label> <!-- dato clase usuario -->
+            <input type="password" id="passwordusuario" name="passwordusuario" required>
+
+            <label for="nombreusuario">¿cual quiere que sea su usuario?</label> <!-- dato clase usuario -->
+            <input type="text" id="nombreusuario" name="nombreusuario" maxlength="25" required>
+
+            <button type="submit">😃</button>
+            <button type="reset">😣</button>
+        </form>
+
+    </body>
+</html>

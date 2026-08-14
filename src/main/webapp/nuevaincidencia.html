@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Incidencias</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="estilocss.css"/>
+    </head>
+    <body>
+        <h1>Nuevas Incidencias</h1>
+        <form action="ServletNuevaIncidencia" method ="post">
+            <h2>Bienvenido {{nombreusu}}, ¿Cual es el Problema?</h2>   
+
+            <label for="tipoincidencia">¿Qué tipo de incidencia a ocurrido?</label>
+            <input type="text" name="incident" id="tipoincidencia" maxlength="25" required>
+
+            <label for="comentario">Por favor escriba un resumen sobre cual ha sido la causa, daños, cuanto tiempo ha pasado, etc....</label>
+            <textarea id="comentario" name="comentario" rows="5" cols="40" style ="width: 600px; height: 150px" required></textarea>
+
+            <label for="fecha">Por favor introduce la fecha y hora de la incidencia:</label>
+            <input type="datetime-local" name="fecha" id="fecha" required>
+
+            <label for="producto">Seleccione el producto afectado:</label>
+            <select id="producto" name="producto" required>
+                <option value="" disabled selected>-- Seleccione una opción --</option>
+
+                <!-- Primera sublista: Cupones -->
+                <optgroup label="Cupones">
+                    <option value="Cupones_1">Lunes</option>
+                    <option value="Cupones_2">Martes</option>
+                    <option value="Cupones_3">Miércoles</option>
+                    <option value="Cupones_4">Jueves</option>
+                    <option value="Cupones_5">Viernes</option>
+                    <option value="Cupones_6">Sábado</option>
+                    <option value="Cupones_7">Domingo</option>
+                    <option value="Cupones_8">Extra</option>
+                </optgroup>
+
+                <!-- Segunda sublista: Rascas -->
+                <optgroup label="Rascas">
+                    <option value="Rascas_1">Rasca de la Liga</option>
+                    <option value="Rascas_2">Fortuna VIP</option>
+                    <option value="Rascas_3">Sueldazo 10</option>
+                    <option value="Rascas_4">El Dorado Millón</option>
+                    <option value="Rascas_5">Mini Fortuna</option>
+                    <option value="Rascas_6">Caza Tesoros</option>
+                    <option value="Rascas_7">Premium 20</option>
+                    <option value="Rascas_8">Zafiro Extra</option>
+                    <option value="Rascas_9">Platinium</option>
+                    <option value="Rascas_10">Sueldazo 50</option>
+                    <option value="Rascas_11">Diamante Puro</option>
+                    <option value="Rascas_12">Gran Oro</option>
+                    <option value="Rascas_13">X10 Rápido</option>
+                    <option value="Rascas_14">Mega Millonario</option>
+                </optgroup>
+            </select>
+            <label for="codigo_postal">¿Cual es el codigo postal del lugar?</label>
+             <input type="text" 
+                   id="codigo_postal" 
+                   name="codigo Postal" 
+                   placeholder="39001"
+                   pattern="[0-9]{5}" 
+                   maxlength="5" 
+                   title="El código postal debe contener exactamente 5 dígitos numéricos."
+                   required>
+
+            <label for="municipio">¿Cual es el municipio donde ha ocurrido el incidente?</label> <!-- por comunidad y por pais mas tarde -->
+            <select id="municipio" name="municipio">
+                <option value="" disabled selected>-- Seleccione una opción --</option>
+                <option value="Barcelona">Barcelona</option>
+                <option value="Sevilla">Sevilla</option>
+                <option value="Valencia">Valencia</option>
+                <option value="Bilbao">Bilbao</option>
+                <option value="Zaragoza">Zaragoza</option>
+                <option value="Málaga">Málaga</option>
+                <option value="Ourense">Ourense</option>
+                <option value="Oviedo">Oviedo</option>
+                <option value="Valladolid">Valladolid</option>
+                <option value="Palma de Mallorca">Palma de Mallorca</option>
+                <option value="Santa Cruz de Tenerife">Santa Cruz de Tenerife</option>               
+            </select>
+            
+            <label for="lugar">¿En que lugar ha ocurrido?(El lugar de trabajo o, si ibas a trabajar, a que estacionamiento te dirigias)</label>
+            <input type="text" name="lugar" id="lugar" maxlength="100" required>
+            <button type="submit">😃</button>
+        </form>
+    </body>
+</html>

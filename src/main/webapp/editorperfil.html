@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Editar Perfil</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="estilocss.css"/>
+    </head>
+    <body>
+        <h1>De acuerdo {{dueñosesion}}, ¿Que quieres hacer?</h1>
+        {{#casotrabajador}}       
+        <form action="ServletEdicion" method="post"> <!-- cambia servlet -->
+            <label for="nombretrabajador">Introduce tu nombre nuevo:</label>
+            <input type="text" id="nombretrabajador" name="nombretrabajador" value="{{trabajador.nombreTrab}}" required>
+
+            <label for="apellidoseusuario">Introduce tus Apellidos</label>
+            <input type="text" id="apellidoseusuario" name="apellidoseusuario" value="{{trabajador.apellidosTrab}}" required>
+
+            <label for="dni">Escribe tu DNI/NIF nuevo:</label>
+            <input type="text" id="dni" name="dni" placeholder="12345678Z o X1234567L" pattern="[XYZxyz]?\d{7,8}[A-Za-z]" maxlength="9" title="Introduce un formato válido de DNI, NIE o NIF" value="{{trabajador.NIF_Trab}}" required>
+
+            <label for="fechanacimineto">¿Cual es tu fecha de nacimiento?</label>
+            <input type="date" id="fechanacimineto" name="fechanacimineto" value="{{trabajador.fechaNaTrab}}" required>
+
+            <label for="fechacontrato">Fecha inicio de Trabajo</label>
+            <input type="date" id="fechacontrato" name="fechacontrato" value="{{trabajador.fechaIncorTrab}}" readonly>
+            {{#administrador}}
+            <label for="telefonoempresa">TLF empresa:</label>
+            <input type="tel" id="telefonoempresa" name="telefonoempresa" value="{{trabajador.tldEmp}}" required>
+            {{/administrador}}
+            {{#trabajadorlimite}}
+            <label for="telefonoempresa">TLF empresa:</label>
+            <input type="tel" id="telefonoempresa" name="telefonoempresa" value="{{trabajador.tldEmp}}" readonly>
+            {{/trabajadorlimite}}
+
+            <label for="baja">Estas de baja:</label>
+            <select name="baja" id="baja">          
+                <option value="True">SI</option>
+                <option value="false" selected>NO</option>
+            </select>
+
+            <label for="tipokiosko">Selecciona si tu puesto de trabajo es fijo o portatil:</label>
+            <select name="tipokiosko" id="tipokiosko" required> 
+                <option value="fijo">fijo</option>
+                <option value="movil">portatil</option>
+            </select>
+            <label for="tipocontrato">Tu contrato es indefinido o temporal:</label>
+            <select name="tipocontrato" id="tipocontrato" required>
+                <option value="indefinido">indefinido</option>
+                <option value="temporal">temporal</option>
+            </select>
+            <label for="tipoactividad">Selecciona si tu lugar de trabajo va a ser permanente o provisional:</label>
+            <select name="tipoactividad" id="tipoactividad" required>
+                <option value="permanente">permanente</option>
+                <option value="cambiable">provisional</option>
+            </select>
+            <input type="hidden" value="{{trabajador.idtrab}}" name="idtrabajador">
+            <input type="hidden" value="trabajador" name="editar">
+            <button type="submit">😃</button>
+        </form>
+        {{/casotrabajador}}
+
+
+        {{#casousuario}}       
+        <form action="ServletEdicion" method="post"> <!-- cambia servlet -->
+            <label for="nombreusuario">Introduce tu nombre de usuario:</label>
+            <input type="text" id="nombreusuario" name="nombreusuario" value="{{usuario.nombreUsu}}" maxlength="25" required>
+
+            <label for="emailusuario">Introduce tu correo electronico</label>
+            <input type="email" id="emailusuario" name="emailusuario" maxlength="50" value="{{usuario.emailUsu}}" required>
+
+            <label for="activo">Estas activo:</label>
+            <select name="activo" id="activo">          
+                <option value="True" selected>SI</option>
+                <option value="false">NO</option>
+            </select>
+            {{#administrador}}
+            <label for="perfil">Tu perfil:</label>
+            <select name="perfil" id="perfil" required>          
+                <option value="admin" selected>Administrador</option>
+                <option value="trabajador">Trabajador</option>
+            </select>
+            {{/administrador}}
+            {{#trabajador}}
+            <label for="perfil">Estado de tu perfil:</label>
+            <input type="text" id="perfil" name="perfil" value="{{usuario.perfil}}" readonly>
+            {{/trabajador}}
+
+            <input type="hidden" value="{{usuario.idusu}}" name="idusuario">
+            <input type="hidden" value="usuario" name="editar">
+            <button type="submit">😃</button>
+        </form>
+        {{/casousuario}}
+
+
+
+        {{#casolugar}}  
+        <h2>Puesto de trabajo asignado</h2>
+        {{#lugar}}
+        <form action="ServletEdicion" method="post"> <!-- cambia servlet -->
+            <label for="calle">Introduce la calle:</label>
+            <input type="text" id="calle" name="calle" value="{{lugar.calle}}" maxlength="100" required>
+
+            <label for="municipio">Introduce el municipio:</label>
+            <input type="text" id="municipio" name="municipio" value="{{lugar.municipio}}" maxlength="50">
+
+            <label for="codigoPostal_{{lugar.codPostal}}">Introduce el codigo postal:</label>
+            <input type="text" 
+                   id="codigoPostal_{{lugar.codPostal}}" 
+                   name="codigoPostal" 
+                   value="{{lugar.codPostal}}" 
+                   placeholder="39001"
+                   pattern="[0-9]{5}" 
+                   maxlength="5" 
+                   title="El código postal debe contener exactamente 5 dígitos numéricos."
+                   required>
+            <input type="hidden" value="{{lugar.idlugar}}" name="idlugar">
+            <input type="hidden" value="lugar" name="editar">
+            <button type="submit">😃</button>
+        </form>
+        {{/lugar}}
+        {{^lugar}}
+        <p>No hay lugares asignados para editar.</p>
+        {{/lugar}} 
+        {{/casolugar}}
+
+
+
+
+
+
+        {{#casocontraseña}}
+        <form action="ServletEdicion" method="post">
+            <label for="contraseñanueva">Introduce tu nueva contraseña:</label>
+            <input type="password" id="contraseñanueva" name="contraseñanueva" required>
+
+            <label for="confirmarcontraseña">Introduce tu contraseña de nuevo:</label>
+            <input type="password" id="confirmarcontraseña" name="confirmarcontraseña" required>
+
+
+            <input type="hidden" value="{{usuario.idusu}}" name="idusuario">
+            <input type="hidden" value="contraseña" name="editar">
+            <button type="submit">😃</button>
+        </form>
+
+        <script>
+            function validarPassword() {
+                var pass1 = document.getElementById("contraseñanueva").value;
+                var pass2 = document.getElementById("confirmarcontraseña").value;
+
+                if (pass1 !== pass2) {
+                    alert("Las contraseñas no coinciden. Por favor, inténtalo de nuevo.");
+                    return false; // Cancela el envío del formulario
+                }
+                return true; // Permite el envío
+            }
+        </script>
+
+        {{/casocontraseña}}        
+
+
+
+    </body>
+</html>
