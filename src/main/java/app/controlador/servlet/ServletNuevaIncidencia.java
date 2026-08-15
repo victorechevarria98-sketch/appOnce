@@ -108,10 +108,12 @@ public class ServletNuevaIncidencia extends HttpServlet {
         id.setTipoIncident(tipo);
         String comentario = request.getParameter("comentario").trim();
         id.setComentario(comentario);       
-        String fechaincidente = request.getParameter("fecha");       
+        String fechaincidente = request.getParameter("fecha");    
+        // aqui guardamos si es rasca o cupon
         String producto = request.getParameter("producto").trim();
+        //aqui compruebas como si fuera un substring cual de los dos casos cumple
         if(producto.startsWith("Cupones_", 0)){
-            int idproducto = Integer.parseInt(producto.replace("Cupones_", ""));
+            int idproducto = Integer.parseInt(producto.replace("Cupones_", ""));// con esto eliminas el texto mientras lo transformas a un int
             id.setIdcupon(idproducto);
         } else {
             int idproducto = Integer.parseInt(producto.replace("Rascas_", ""));
@@ -119,7 +121,7 @@ public class ServletNuevaIncidencia extends HttpServlet {
         }
         id.setIdtrab(tb.getIdtrab());
              
-        LocalDateTime fecha = LocalDateTime.parse(fechaincidente);
+        LocalDateTime fecha = LocalDateTime.parse(fechaincidente);// cambias la fecha pero aqui no necesitas tu poner el format ya que te lo envian de la forma correcta solo cambias de strinf a lovaltimedate
         id.setFechaIncident(fecha);
       
         String codigopostal = request.getParameter("codigo postal");
@@ -128,9 +130,11 @@ public class ServletNuevaIncidencia extends HttpServlet {
         lg.setMunicipio(municipio);
         String lugar = request.getParameter("lugar").trim();
         lg.setCalle(lugar);
-        lg.setIdtrab(tb.getIdtrab());      
+        lg.setIdtrab(tb.getIdtrab());   
+        // envias los datos en 2 instancias
            
-        boolean insert = incidenciasDao.nuevaIncidencia(id, lg);
+        boolean insert = incidenciasDao.nuevaIncidencia(id, lg); 
+// esta funcion es anterior a que pusiese incidencias con todas las variable por lo tanto ante incidencias no tenia el id lugar asi que lo envio por separado
        
         if(insert){
             RenderVista.renderizarVista(response, getServletContext().getRealPath("avisos.html"), new Aviso("Su incidencia ha sido registrada", "Intentaremos ofrecer una solucion lo antes posible, muchas gracias", "ServletMenuPrincipal"));

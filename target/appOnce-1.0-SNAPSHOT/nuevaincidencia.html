@@ -12,7 +12,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     </head>
     <body>
         <h1>Nuevas Incidencias</h1>
-        <form action="ServletNuevaIncidencia" method ="post">
+        <form action="ServletNuevaIncidencia" method ="post"> <!-- viene de servletlecturanombre editar -->
             <h2>Bienvenido {{nombreusu}}, ¿Cual es el Problema?</h2>   
 
             <label for="tipoincidencia">¿Qué tipo de incidencia a ocurrido?</label>
@@ -29,7 +29,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <option value="" disabled selected>-- Seleccione una opción --</option>
 
                 <!-- Primera sublista: Cupones -->
-                <optgroup label="Cupones">
+                <optgroup label="Cupones"> <!-- envia lista y ponla dentro de un mustache de cupon con id dentro de value y el nombre en option como su nombre -->
                     <option value="Cupones_1">Lunes</option>
                     <option value="Cupones_2">Martes</option>
                     <option value="Cupones_3">Miércoles</option>
@@ -41,7 +41,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 </optgroup>
 
                 <!-- Segunda sublista: Rascas -->
-                <optgroup label="Rascas">
+                <optgroup label="Rascas"> <!-- envia lista y ponla dentro de un mustache de rasca con id dentro de value y el nombre en option como su nombre -->
                     <option value="Rascas_1">Rasca de la Liga</option>
                     <option value="Rascas_2">Fortuna VIP</option>
                     <option value="Rascas_3">Sueldazo 10</option>

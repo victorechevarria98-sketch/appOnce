@@ -60,7 +60,7 @@ public class ServletEdicion extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private UsuarioDao usuarioDao; // cargada e inicializada
+    private UsuarioDao usuarioDao; // cargada e inicializada para no hacerlo cada vez
     private TrabajadorDao trabajadorDao;
     private LugarDao lugarDao;
     private PedidoRascaDao pedidoRascaDao;
@@ -68,7 +68,7 @@ public class ServletEdicion extends HttpServlet {
 
     @Override
     public void init() {
-        usuarioDao = new UsuarioDao(); // creo instancia para do post
+        usuarioDao = new UsuarioDao(); // creo instancia para do post o do get
         trabajadorDao = new TrabajadorDao();
         lugarDao = new LugarDao();
         pedidoRascaDao = new PedidoRascaDao();
@@ -118,23 +118,23 @@ public class ServletEdicion extends HttpServlet {
 
         switch (vista) {
             case "usuario":
-                id = request.getParameter("idusuario");
+                id = request.getParameter("idusuario"); // pasamos el id para hacer la edicion de un usuario general, y no solo el de tu perfil
                 int idusuario = Integer.parseInt(id);
                 String nombreusu = request.getParameter("nombreusuario").trim();
-                String emailusu = request.getParameter("emailusuario").trim(); // comprueba que el nuevo no es unique comparadonlo con un select y devuelve aviso si existe
+                String emailusu = request.getParameter("emailusuario").trim(); // comprueba que el nuevo  es unique comparadonlo con un select y devuelve aviso si existe
                 String activorespuesta = request.getParameter("activo").trim();
                 boolean activo = Boolean.parseBoolean(activorespuesta);
                 String perfilrespuesta = request.getParameter("perfil").trim();
-                rol perfil = Usuario.getEstadoFromString(perfilrespuesta);
+                rol perfil = Usuario.getEstadoFromString(perfilrespuesta);// saca el perfil del string para ver si concuerda con el rol, sino devolvera el rol de trabajador
                 ArrayList<Usuario> lista = new ArrayList<>();
-                lista = usuarioDao.seleccionTodosuariosAbsoluta();
-                for (Usuario u : lista) {
+                lista = usuarioDao.seleccionTodosuariosAbsoluta(); //lista de todos sin tener en cuenta si esta activo para poder ver los usuarios que ya no "exiaten"
+                for (Usuario u : lista) { // todo esto para comprobar que es correcto, mira si javascript puede hacerlo mas simple
                     if (u.getEmailUsu().equals(emailusu) && u.getIdusu() != idusuario) {
                         RenderVista.renderizarVista(response, getServletContext().getRealPath("avisos.html"), new Aviso("correo repetido, prueba otra vez", "Operacion fallida, muchas gracias", "ServletMenuPrincipal"));
                         break;
                     }
                 }
-                Usuario u = new Usuario();
+                Usuario u = new Usuario();// envia todo para el update necesario
                 u.setNombreUsu(nombreusu);
                 u.setEmailUsu(emailusu);
                 u.setActivo(activo);
@@ -149,7 +149,8 @@ public class ServletEdicion extends HttpServlet {
 
                 break;
             case "trabajador":
-                try {
+                try {//el try es por la fecha que al formatear necesitar guardar el error de alguna forma si no funciona
+                    //como tiene varios enum en la base de datos, pasas todos por la funcion que nos devuelve el atributo de trabajador
                     id = request.getParameter("idtrabajador");
                     int idtrabajador = Integer.parseInt(id);
                     String nombre = request.getParameter("nombretrabajador").trim();
@@ -197,6 +198,7 @@ public class ServletEdicion extends HttpServlet {
 
             case "lugar":
                 id = request.getParameter("idlugar");
+// como no estas obligado a escribir estos datos en en el formulario hay que comprobar que no envias nada y ponerlo en null
                 int idlugar = Integer.parseInt(id);
                 String calle = request.getParameter("calle").trim();
                 if (calle.isBlank()) {
@@ -240,23 +242,23 @@ public class ServletEdicion extends HttpServlet {
                 int idpedido = Integer.parseInt(id);
                 String producto = request.getParameter("producto");
                 String fechatexto = request.getParameter("fechapedido");
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");// este es el formato para localdatetime
                 LocalDateTime fechaHora = LocalDateTime.parse(fechatexto, formatter);
 
                 String numserie = request.getParameter("serie");
                 String num = request.getParameter("cantidad");
                 int cantidad = Integer.parseInt(num);
-                boolean cupones = false;
+                boolean cupones = false;// comprobamos si se trata de un cupon o rasca pasando el nombre de todos los productos y cambiando el estado a true para cupon
                 ArrayList<String> listacupones = pedidoCuponDao.listaCuponNombre();
                 int idprocuto = 0;
                 for (String temporal : listacupones) {
-                    if(producto.equals(temporal)){
+                    if(producto.equals(temporal)){// si el producto pasado por formulario es igual al nombre pasado por array cambias a true la variable
                         cupones = true;
                         idprocuto = pedidoCuponDao.obtenerIdCupon(producto);
                     }
                 }
                 exito = false;
-                if(cupones){
+                if(cupones){ // aqui decide si es cupon o rasca
                     PedidoCupon pc = new PedidoCupon();
                     pc.setFechaPedidoCupon(fechaHora);
                     pc.setNumSerierCupon(numserie);
@@ -269,9 +271,9 @@ public class ServletEdicion extends HttpServlet {
                         } else {
                             RenderVista.renderizarVista(response, getServletContext().getRealPath("avisos.html"), new Aviso("¿Vaya no hay pedido cupon?", "Buena suerte investigando😣", "ServletMenuPrincipal"));
                         }
-                } else {
+                } else {// si es rasca hace esto por eliminacion
                     idprocuto = pedidoRascaDao.obtenerIdRasca(producto);
-                    if(idprocuto == 0){
+                    if(idprocuto == 0){// por si acaso hay algun problema no solo lo envias a la pagian de error compruebas si este es el error
                         System.out.println("idprocuto sale o, mira porque");
                     }
                     PedidoRasca pr = new PedidoRasca();

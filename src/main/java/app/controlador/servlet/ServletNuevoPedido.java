@@ -92,16 +92,19 @@ public class ServletNuevoPedido extends HttpServlet {
         HttpSession sesion = request.getSession(false);
         Usuario usu = (Usuario) sesion.getAttribute("usuario");
         String emailusuario = usu.getEmailUsu();
+        // como puedes  escojer mas de un producto a la vez, guardas en un array todos los id que hemos recibido en cada option
         String[] pedidocupon = request.getParameterValues("ProductoCupon");
-        if (pedidocupon != null) {
+        if (pedidocupon != null) {// compruebas que ha escojido un cupon 
             for (String cupon : pedidocupon) {
+                // cojes la cantidad basada en el request, ya que su nombre es cantidades+idcupon
                 int cantidad = Integer.parseInt(request.getParameter("cantidades_" + cupon));
-                int idcupon = Integer.parseInt(cupon);
-                pedidocupondao.insertarPedidoCuponPorTrabajador(idcupon, cantidad, emailusuario);
+                int idcupon = Integer.parseInt(cupon);// transformas el id y como la fecha y el codigo no depende de el sino de el now() y una formula envias todo por separado
+                //todo esto es antes de que supiera como enviar el id del trabajador como hidden por lo tanto el email es mi forma de llegar al idtrabajador
+                pedidocupondao.insertarPedidoCuponPorTrabajador(idcupon, cantidad, emailusuario);//
             }
         }
         String[] pedidorasca = request.getParameterValues("productosrasca");
-        if (pedidorasca != null) {
+        if (pedidorasca != null) {// haces lo mismo que con los cupones
             for (String rasca : pedidorasca) {
                 int cantidad = Integer.parseInt(request.getParameter("cantidades_" + rasca));
                 int idrasca = Integer.parseInt(rasca);
@@ -109,13 +112,13 @@ public class ServletNuevoPedido extends HttpServlet {
                 pedidorascadao.insertarPedidoRascaPorTrabajador(idrasca, cantidad, emailusuario);
             }
         }
-        if (pedidocupon != null && pedidorasca != null) {
+        if (pedidocupon != null && pedidorasca != null) {// si haces pedido de ambos tipos de productos
             RenderVista.renderizarVista(response, getServletContext().getRealPath("avisos.html"), new Aviso("Felicidades, pedido correcto", "Recibira su pedido en un par de dias, esclavo capitalista", "ServletMenuPrincipal"));
         } else if (pedidocupon != null) {
             RenderVista.renderizarVista(response, getServletContext().getRealPath("avisos.html"), new Aviso("Felicidades, pedido de cupones correcto", "Recibira sus cupones en un par de dias, esclavo capitalista", "ServletMenuPrincipal"));
         } else if (pedidorasca != null) {
             RenderVista.renderizarVista(response,getServletContext().getRealPath("avisos.html"),new Aviso("Felicidades, pedido de rascas correcto","Recibira sus rascas en un par de dias, esclavo capitalista","ServletMenuPrincipal"));
-        } else {
+        } else {// por si hay algun errorr en ambos
             RenderVista.renderizarVista(response,getServletContext().getRealPath("avisos.html"),new Aviso("Vaya algo que no se ha fallado","Buena suerte investigando😣","nuelvopedido.html"));
         }
     }

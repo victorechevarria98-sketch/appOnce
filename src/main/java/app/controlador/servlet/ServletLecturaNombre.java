@@ -52,7 +52,7 @@ public class ServletLecturaNombre extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private UsuarioDao usuarioDao; // cargada e inicializada
+    private UsuarioDao usuarioDao; // cargada e inicializada para no hacerlo en cada case del menu
     private TrabajadorDao trabajadorDao;
     private LugarDao lugarDao;
     private PedidoRascaDao pedidoRascaDao;
@@ -60,7 +60,7 @@ public class ServletLecturaNombre extends HttpServlet {
 
     @Override
     public void init() {
-        usuarioDao = new UsuarioDao(); // creo instancia para do post
+        usuarioDao = new UsuarioDao(); // creo instancia para do get
         trabajadorDao = new TrabajadorDao();
         lugarDao = new LugarDao();
         pedidoRascaDao = new PedidoRascaDao();
@@ -81,7 +81,7 @@ public class ServletLecturaNombre extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) // como lo enviamos en href eso nos lleva siempre al get no al post, podrias hacerlo tambien en processrequest
             throws ServletException, IOException {
         // buscamos la sesion abierta, la metemos en el hashmap que ira siempre al rendervista
         HttpSession sesion = request.getSession(false);
@@ -97,7 +97,16 @@ public class ServletLecturaNombre extends HttpServlet {
         usuario.put("dueñosesion", dueñosesion);
 
         switch (vista) {
-            case "nuevopedido":
+/*            
+
+            
+            
+hay que hacer un cambio en nuevo pedido y nueva incidencia para que el formulario sea dinamico y cambie dependiendo de que productos hay si editas uno eliminas otro o lo das de alta
+            
+
+            
+            */
+            case "nuevopedido":            
                 RenderVista.renderizarVista(response, getServletContext().getRealPath("nuevopedido.html"), usuario);
                 break;
             case "nuevaincidencia":
@@ -107,6 +116,7 @@ public class ServletLecturaNombre extends HttpServlet {
                 Trabajador tb = new Trabajador();
                 Lugar lb = new Lugar();
                 ArrayList<Lugar> listalugar = new ArrayList<>();
+//guardamos lugar, trabajador y usuario para envialo a tuperfil.html
                 listalugar = lugarDao.obtenerLugarCompletoPoremail(emailusuario);
                 tb = trabajadorDao.obtenerTrabajadorCompletoPorEmail(emailusuario);
                 usuario.put("trabajador", tb);
@@ -118,8 +128,8 @@ public class ServletLecturaNombre extends HttpServlet {
                 String operacion = request.getParameter("operacion");
                 switch (operacion) {
                     case "editarlugar" -> {
-                        // debes buscar por id trabajador
-                        usuario.put("casolugar", operacion); // if casolugar.equals(editarlugar) otro if eliminarlugar
+                        // debes buscar por id lugar
+                        usuario.put("casolugar", operacion); // aquie podria haber true no operacion, lo puso netbeans automaticamente
                         String id = request.getParameter("idlugar");
                         Lugar lb2 = new Lugar();
                         lb2 = lugarDao.obtenerLugarCompletoPorIDLugar(Integer.parseInt(id));
@@ -130,9 +140,10 @@ public class ServletLecturaNombre extends HttpServlet {
                         usuario.put("casousuario", operacion);
                         String id = request.getParameter("idusuario");
                         usuario.put("idusuario", Integer.valueOf(id));
+                        // comprobamos si es admin con el perfil dentro de la sesion
                         if ("admin".equalsIgnoreCase(usu.getPerfil().name())) {
                             usuario.put("administrador", true);
-                        } else {
+                        } else {// si es trabajador, saldra otra parte del formulario
                             usuario.put("trabajador", true);
                         }
                         RenderVista.renderizarVista(response, getServletContext().getRealPath("editorperfil.html"), usuario);
@@ -141,6 +152,7 @@ public class ServletLecturaNombre extends HttpServlet {
                         usuario.put("casotrabajador", operacion);
                         String id = request.getParameter("idtrabajador");
                         Trabajador tb2 = new Trabajador();
+                        //sacas todos los datos a editar y los envias al formulario
                         tb2 = trabajadorDao.obtenerTrabajadorCompletoPorIDTrabajador(Integer.parseInt(id));
                         usuario.put("trabajador", tb2);
                         if ("admin".equalsIgnoreCase(usu.getPerfil().name())) {
@@ -175,15 +187,17 @@ public class ServletLecturaNombre extends HttpServlet {
                         }
 //como el valor dentro de la clave formulario es el mismo map, puedes meterlo fuera de los if ya que solo cambiara los datos dentro de estos
                         usuario.put("formulario", formulario);
-                        //metemos esto para que ponga el formulario del trabajador ya que tiene mas restricciones
+                        //metemos esto para que ponga el formulario del trabajador ya que tiene mas restricciones que el de administrador y por lo tanto diferente formulario
                         usuario.put("trabajadorlimite", true);
                         RenderVista.renderizarVista(response, getServletContext().getRealPath("editorpedidos.html"), usuario);
 
                     }
                     case "editarpedidocupon" -> {
                         String id = request.getParameter("idpedidocupon");
+                        //guarda el id por separado para tenerlo ya en el formulario luego, mas facil para mi
                         usuario.put("idpedido", Integer.valueOf(id));
                         Map<String, Object> formulario = new HashMap<>();
+                        // busca los que quieres cambiar y necesito el nombre del trabajador y el nombre del producto en un solo map asi no necesito varia funciones
                         formulario = pedidoCuponDao.obtenerPedidoPorIDPedidoCupon(Integer.valueOf(id));
                         usuario.put("formulario", formulario);
                         if ("admin".equalsIgnoreCase(usu.getPerfil().name())) {
@@ -192,7 +206,7 @@ public class ServletLecturaNombre extends HttpServlet {
                         RenderVista.renderizarVista(response, getServletContext().getRealPath("editorpedidos.html"), usuario);
 
                     }
-                    case "editarpedidorasca" -> {
+                    case "editarpedidorasca" -> { // es el mismo proceso para ambos rasca y cupon
                         String id = request.getParameter("idpedidorasca");
                         usuario.put("idpedido", Integer.valueOf(id));
                         Map<String, Object> formulario = new HashMap<>();
@@ -204,14 +218,13 @@ public class ServletLecturaNombre extends HttpServlet {
                         RenderVista.renderizarVista(response, getServletContext().getRealPath("editorpedidos.html"), usuario);
 
                     }
-                    default -> {
-                    }
                 }
                 break;
 
             case "eliminar":
+                //elimiar pedidos, usuario, trabajador o lugar
                 String eliminacion = request.getParameter("operacion");
-                boolean exito = false;
+                boolean exito = false;// esta variable sirve para saber a que pagina de avisos llegas
                 switch (eliminacion) {
                     case "eliminarlugar" -> {
                         String idlugar = request.getParameter("idlugar");
@@ -277,8 +290,6 @@ public class ServletLecturaNombre extends HttpServlet {
                     }
 
                 }
-                break;
-            default:
                 break;
 
         }
