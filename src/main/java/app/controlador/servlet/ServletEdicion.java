@@ -121,7 +121,8 @@ public class ServletEdicion extends HttpServlet {
                 id = request.getParameter("idusuario");
                 int idusuario = Integer.parseInt(id);
                 String nombreusu = request.getParameter("nombreusuario").trim();
-                String emailusu = request.getParameter("emailusuario").trim(); // comprueba que el nuevo no es unique comparadonlo con un select y devuelve aviso si existe
+                String emailusu = request.getParameter("emailusuario").trim(); 
+// comprueba que el nuevo no es unique comparadonlo con un select y devuelve aviso si existe
                 String activorespuesta = request.getParameter("activo").trim();
                 boolean activo = Boolean.parseBoolean(activorespuesta);
                 String perfilrespuesta = request.getParameter("perfil").trim();
@@ -242,15 +243,19 @@ public class ServletEdicion extends HttpServlet {
                 String fechatexto = request.getParameter("fechapedido");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
                 LocalDateTime fechaHora = LocalDateTime.parse(fechatexto, formatter);
-
+// parse la fecha usando un plano que sirva para localtimedate
                 String numserie = request.getParameter("serie");
                 String num = request.getParameter("cantidad");
                 int cantidad = Integer.parseInt(num);
+// aqui creamos una variable para buscar a traves de un for si el nombre del cupon que hemos extraido aparece en la base de datos
                 boolean cupones = false;
+                //pasamos en un array la lista de cupones
                 ArrayList<String> listacupones = pedidoCuponDao.listaCuponNombre();
                 int idprocuto = 0;
+                // si se recorre el array y no se pasa por el if vamos al siguiente if
                 for (String temporal : listacupones) {
                     if(producto.equals(temporal)){
+                        // cuando pasas y se cumple la condicion el true hara que el primer if ocurra
                         cupones = true;
                         idprocuto = pedidoCuponDao.obtenerIdCupon(producto);
                     }

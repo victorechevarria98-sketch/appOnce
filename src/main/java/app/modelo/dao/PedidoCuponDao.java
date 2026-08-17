@@ -108,6 +108,7 @@ public class PedidoCuponDao {
                 + "from cupon c ";
         try (Connection con = ConexionDBOnce.Conexiondb(); Statement stmt = con.createStatement()) {
             ResultSet rs = stmt.executeQuery(consultasql);
+            //metemos en un array cada nombre en una posicion
             ArrayList<String> listaCompleta = new ArrayList<>();
             while (rs.next()) {
 
