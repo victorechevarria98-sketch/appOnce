@@ -12,8 +12,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     </head>
     <body>
         <h1>De acuerdo {{dueñosesion}}, ¿Que quieres hacer?</h1>
-        {{#formulario}}
-        {{#administrador}}
+        {{#formulario}} <!-- el map dentro de editarpedido en servletlecturanombre -->
+        {{#administrador}} 
 
         <form action="ServletEdicion" method="post">
             <h2>{{TrabajadorNombre}} {{TrabajadorApellidos}}</h2>
@@ -37,7 +37,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <button type="submit">😃</button>
         </form>  
         {{/administrador}}
-        {{#trabajadorlimite}}
+        {{#trabajadorlimite}} 
         <form action="ServletEdicion" method="post">
 
             <label for="producto">Introduce el producto:</label>
@@ -55,7 +55,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <label for="precio">Precio (€):</label>
             <input type="number" id="precio" name="precio" min="0" placeholder="0.50" value="{{precio}}" readonly>
 
-            <input type="hidden" value="{{idpedido}}" name="idpedido"> <!-- enviamos para guardar el trabajador que es -->
+            <input type="hidden" value="{{idpedido}}" name="idpedido"> <!-- enviamos para guardar que trabajador que es -->
             <input type="hidden" value="pedido" name="editar"> <!-- enviamos para la opcion del menu -->
             <button type="submit">😃</button>
 

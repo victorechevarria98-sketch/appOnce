@@ -11,7 +11,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <link rel="stylesheet" href="estilocss.css"/>
     </head>
     <body>
-        <h1>Buenos dias {{nombreusu}}, ¿que quiers hacer hoy?</h1>
+        <h1>Buenos dias {{nombreusu}}, ¿que quiers hacer hoy?</h1> <!-- viene de servletlecturanombre editar -->
         <details>
             <div>
                 <ul>
@@ -94,7 +94,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <td>{{usuario.nombreUsu}}</td>
                     <td>{{usuario.emailUsu}}</td>
                     <td>{{usuario.activo}}</td>
-                    <td> <!-- para el case de lecturanombre -->
+                    <td> 
                         <a href="ServletLecturaNombre?vista=editar&operacion=editarusuario&idusuario={{usuario.idusu}}">✏️Editar</a> 
                         <a href="ServletLecturaNombre?vista=eliminar&operacion=eliminarusuario&idusuario={{usuario.idusu}}">🗑️Borrar</a>
                     </td>
@@ -134,7 +134,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 {{/lugar}}
                 {{^lugar}}
                 <tr>
-                    <td colspan="4" class="no-data">No hay un puesto guardado guardados.</td>                   
+                    <td colspan="4" class="no-data">No hay un puesto guardado guardados.</td>
+                    <td>
+                        <a href="ServletLecturaNombre?vista=editar&operacion=editarlugar&idlugar={{idlugar}}">✏️Editar</a> 
+                    </td>
                 </tr>
                 {{/lugar}}               
             </tbody>

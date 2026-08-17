@@ -14,9 +14,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     </head>
     <body>
         <h1>Nuevo pedido</h1>
-        <h2>Bienvenido {{nombreusu}}, Introduzca los datos de su nuevo pedido </h2>
+        <h2>Bienvenido {{nombreusu}}, Introduzca los datos de su nuevo pedido </h2> <!-- viene de servletlecturanombre editar -->
         <form action="ServletPedidos" method="post">
-            <h3>Cupones</h3>
+            <h3>Cupones</h3> <!-- repite lo mismo que con nueva incidencia, deberia solo necesitar 1 li cambiando todo lo que ponga su nombre y en cantidades el id del producto -->
             <ul>
                 <li>
                     <label for="Lunes">Lunes</label>
@@ -25,8 +25,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 </li>
                 <li>
                     <label for="Martes">Martes</label>
-                    <input type="checkbox" id="Martes" name="ProductoCupon" value="2">
-                    <input type="number" name="cantidades_2" min="1" max="10" value="1">
+                    <input type="checkbox" id="Martes" name="ProductoCupon" value="2"> <!-- esto es el id de cada producto que enviaremos al servlet -->
+                    <input type="number" name="cantidades_2" min="1" max="10" value="1">  <!-- marcamos cada cantidad con su id correspondiente -->
                 </li>
                 <li>
                     <label for="Miércoles">Miércoles</label>

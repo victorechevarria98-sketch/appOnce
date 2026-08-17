@@ -10,8 +10,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="estilocss.css"/>
     </head>
-    <h1>De acuerdo {{usuario.nombreUsu}}, ¿Que quieres hacer?</h1>
-    <body>
+    <h1>De acuerdo {{usuario.nombreUsu}}, ¿Que quieres hacer?</h1> <!-- viene de servletpaginacion -->
+    <body> 
         <details>
             <summary>Menú de Usuario</summary>
             <div>
@@ -28,7 +28,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             </div>
         </details>
         
-        
+        <!-- aquie escojes si es lista de cupones o rascas -->
          <form action="ServletPaginacion" method="get">
             {{#inicio}}
             <h1>¿que lista quieres ver?</h1>
@@ -39,7 +39,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <button type="submit" value="cupon" name="tipoproducto">CUPON</button>
         </form>
 
-        
+        <!-- me ahorro la lista con el boton editar y le dejo hacer al edicion directamente -->        
         {{#productorasca}}
         {{#rasca}}        
         <form action="ServletUsuariosProductos" method="get">
@@ -51,8 +51,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 
             <input type="hidden" value="{{idrasca}}" name="idrasca">
-            <button type="submit" value="editarrasca" name="vista">editar</button>
-            <button type="submit" value="eliminarrasca" name="vista">eliminar</button>
+            <button type="submit" value="editarrasca" name="vista">editado</button>
+            <button type="submit" value="eliminarrasca" name="vista">eliminado</button>
 
         </form>
         {{/rasca}}
@@ -83,8 +83,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <input type="number" id="precio" name="precio" min="0" step ="0.01" placeholder="0.50" value="{{precioCupon}}" required>
 
             <input type="hidden" value="{{idcupon}}" name="idcupon">
-            <button type="submit" value="editarcupon" name="vista">editar</button>
-            <button type="submit" value="eliminarcupon" name="vista">eliminar</button>
+            <button type="submit" value="editarcupon" name="vista">editado</button>
+            <button type="submit" value="eliminarcupon" name="vista">eliminado</button>
 
         </form>
         {{/cupon}}

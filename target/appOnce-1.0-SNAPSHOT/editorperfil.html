@@ -12,7 +12,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     </head>
     <body>
         <h1>De acuerdo {{dueñosesion}}, ¿Que quieres hacer?</h1>
-        {{#casotrabajador}}       
+        {{#casotrabajador}}   <!-- servletlecturanombre, editar trabajador propio -->    
         <form action="ServletEdicion" method="post"> <!-- cambia servlet -->
             <label for="nombretrabajador">Introduce tu nombre nuevo:</label>
             <input type="text" id="nombretrabajador" name="nombretrabajador" value="{{trabajador.nombreTrab}}" required>
@@ -28,11 +28,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
             <label for="fechacontrato">Fecha inicio de Trabajo</label>
             <input type="date" id="fechacontrato" name="fechacontrato" value="{{trabajador.fechaIncorTrab}}" readonly>
-            {{#administrador}}
+            {{#administrador}} <!-- si eres administrador puedes cambiar -->
             <label for="telefonoempresa">TLF empresa:</label>
             <input type="tel" id="telefonoempresa" name="telefonoempresa" value="{{trabajador.tldEmp}}" required>
             {{/administrador}}
-            {{#trabajadorlimite}}
+            {{#trabajadorlimite}}<!-- si eres trabajdor no te dejo escojer  -->
             <label for="telefonoempresa">TLF empresa:</label>
             <input type="tel" id="telefonoempresa" name="telefonoempresa" value="{{trabajador.tldEmp}}" readonly>
             {{/trabajadorlimite}}
@@ -59,14 +59,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <option value="cambiable">provisional</option>
             </select>
             <input type="hidden" value="{{trabajador.idtrab}}" name="idtrabajador">
-            <input type="hidden" value="trabajador" name="editar">
+            <input type="hidden" value="trabajador" name="editar"> 
+            <!-- guardo que opcion de menu y que trabajador estoy editando, deberia dar igual porque es tu perfil y esta guardao en la sesion pero asi puedo usar la misma funcio si es el trabajador propio u otro trabajador  -->
             <button type="submit">😃</button>
         </form>
         {{/casotrabajador}}
 
 
-        {{#casousuario}}       
-        <form action="ServletEdicion" method="post"> <!-- cambia servlet -->
+        {{#casousuario}}       <!-- servletlecturanombre, editar usuario tuyo -->  
+        <form action="ServletEdicion" method="post"> 
             <label for="nombreusuario">Introduce tu nombre de usuario:</label>
             <input type="text" id="nombreusuario" name="nombreusuario" value="{{usuario.nombreUsu}}" maxlength="25" required>
 
@@ -78,14 +79,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <option value="True" selected>SI</option>
                 <option value="false">NO</option>
             </select>
-            {{#administrador}}
+            {{#administrador}} <!-- si eres administrador puedes cambiar -->
             <label for="perfil">Tu perfil:</label>
             <select name="perfil" id="perfil" required>          
                 <option value="admin" selected>Administrador</option>
                 <option value="trabajador">Trabajador</option>
             </select>
             {{/administrador}}
-            {{#trabajador}}
+            {{#trabajador}}  <!-- si eres trabajdor no te dejo escojer  -->
             <label for="perfil">Estado de tu perfil:</label>
             <input type="text" id="perfil" name="perfil" value="{{usuario.perfil}}" readonly>
             {{/trabajador}}
@@ -98,10 +99,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 
 
-        {{#casolugar}}  
+        {{#casolugar}}  <!-- cambiar lugar, servletlecturanombre editar vista -->
         <h2>Puesto de trabajo asignado</h2>
-        {{#lugar}}
-        <form action="ServletEdicion" method="post"> <!-- cambia servlet -->
+  <!-- aqui lo tenia como lugar  pero siempre elijo un lugar para editar por lo cual no lo necesito-->
+        <form action="ServletEdicion" method="post"> 
             <label for="calle">Introduce la calle:</label>
             <input type="text" id="calle" name="calle" value="{{lugar.calle}}" maxlength="100" required>
 
@@ -122,10 +123,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <input type="hidden" value="lugar" name="editar">
             <button type="submit">😃</button>
         </form>
-        {{/lugar}}
-        {{^lugar}}
-        <p>No hay lugares asignados para editar.</p>
-        {{/lugar}} 
+
         {{/casolugar}}
 
 
@@ -146,7 +144,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <input type="hidden" value="contraseña" name="editar">
             <button type="submit">😃</button>
         </form>
-
+        <!-- revisa javscript -->
         <script>
             function validarPassword() {
                 var pass1 = document.getElementById("contraseñanueva").value;

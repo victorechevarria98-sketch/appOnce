@@ -11,7 +11,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <link rel="stylesheet" href="estilocss.css"/>
     </head>
     <body>
-        {{#inicio}}
+        {{#inicio}} <!-- si llegas pasando por primera vez al servlet esto te saldra, sino pasara al formulario de abajo -->
         <form action="ServletUsuariosProductos" method="get">
             <h2>¿que lista quieres ver?</h2>
             <input type="hidden" value="nuevoproducto" name="vista">
@@ -21,7 +21,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         {{/inicio}}
 
         {{#nuevo}}
-        <form action="ServletUsuariosProductos" method="get">
+        <form action="ServletUsuariosProductos" method="get">  <!-- viene de servlet editarusuario y producto -->
             <h1>Bienvenido {{nombreusu}}, Introduzca los datos de su nuevo producto </h1>
             {{#rasca}}
             <input type="hidden" value="rasca" name="producto">
