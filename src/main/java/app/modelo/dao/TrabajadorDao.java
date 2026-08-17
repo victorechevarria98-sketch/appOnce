@@ -13,7 +13,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +27,7 @@ public class TrabajadorDao {
     public TrabajadorDao() {
     }
 
+// la funcion para generar un codigo de producto, se supone que cada producto tiene uno pero tecnicamente lo pondria alguien externo al enviar el pedido por eso es aleatorio
     public static String generarCodigoFormat() {
         Random random = new Random();
 
@@ -45,6 +45,7 @@ public class TrabajadorDao {
         return String.format("%c%c-%02d-%04d", letra1, letra2, bloque1, bloque2);
     }
 
+    // trabajador relacionado cone el usuario de sesion para editar en mi perfil
     public Trabajador obtenerTrabajadorCompletoPorEmail(String emailusuario) {
         String selectsql = "select t.id_trabajador, t.nombre_trab,t.apellidos_trab,t.NIF_Trab, t.fechaNa_trab, t.fechaIncor_trab, t.TLF_emp,t.BajaLaboral, t.tipokiosko, t.tipocontrato, t.tipoactividad, t.id_usu\n"
                 + "from trabajador t \n"
@@ -64,7 +65,9 @@ public class TrabajadorDao {
         }
         return null;
     }
-
+    
+    
+//sacar todas las variables de trabajador y no tener que escribirlas cada vez
     public Trabajador mapResultSet(ResultSet rs) throws SQLException {
         int id = rs.getInt("id_trabajador");
         String nombre = rs.getString("nombre_trab");
@@ -74,7 +77,7 @@ public class TrabajadorDao {
         Date fechainicio = rs.getDate("fechaIncor_trab");
         int tlf = rs.getInt("TLF_emp");
         boolean baja = rs.getBoolean("BajaLaboral");
-        Kiosko kiosko = Kiosko.valueOf(rs.getString("tipokiosko"));
+        Kiosko kiosko = Kiosko.valueOf(rs.getString("tipokiosko"));//estas tres variables son enum asi que obtienes si tipokiosko de rs es igual a alguno de los posibles valores de Kiosko
         Contrato contrato = Contrato.valueOf(rs.getString("tipocontrato"));
         Actividad actividad = Actividad.valueOf(rs.getString("tipoactividad"));
         int idusu = rs.getInt("id_usu");
@@ -83,6 +86,8 @@ public class TrabajadorDao {
         return tb;
     }
 
+    
+    //para non sacar toda la tabla de trabajador
     public Trabajador obtenerIdTrabajadorPorEmail(String emailusuario) {
         String selectsql = "select t.id_trabajador \n"
                 + "from trabajador t \n"
@@ -105,6 +110,7 @@ public class TrabajadorDao {
         return null;
     }
 
+    //el id lo usas para extraer la informacion de ese trabajador
     public Trabajador obtenerTrabajadorCompletoPorIDTrabajador(int id) {
         String selectsql = "select t.id_trabajador, t.nombre_trab,t.apellidos_trab,t.NIF_Trab, t.fechaNa_trab, t.fechaIncor_trab, t.TLF_emp,t.BajaLaboral, t.tipokiosko, t.tipocontrato, t.tipoactividad, t.id_usu\n"
                 + "from trabajador t \n"

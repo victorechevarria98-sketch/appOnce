@@ -25,7 +25,9 @@ public class UsuarioDao {
 
     public UsuarioDao() {
     }
-
+    
+    
+//saca todos los usuarios sin tener en cuenta si estan activos o no en la aplicacion
     public ArrayList<Usuario> seleccionTodosuariosAbsoluta() {
         String selectsql = "select u.id_usu, u.perfil, u.activo , u.nombre_usu, u.password_usu, u.email_usu from usuarios u ";
         try (Connection con = ConexionDBOnce.Conexiondb(); Statement stmt = con.createStatement();) {
@@ -50,7 +52,9 @@ public class UsuarioDao {
         }
         return null;
     }
-
+    
+    
+//sacar el usuario con el email pero  no vale para los inactivos, asi no pueden iniciar sesion
     public Usuario obtenerUsuarioActivoPorEmail(String nombre) {
 
         String sentenciasql = "select u.id_usu, u.perfil, u.activo , u.nombre_usu, u.password_usu, u.email_usu from usuarios u where u.email_usu = ? and u.activo = 1";
@@ -68,6 +72,7 @@ public class UsuarioDao {
         return null;
     }
 
+    // para no tener que introducir Usuario con sus variables cada vez que lo necesitas
     public Usuario mapResultSet(ResultSet rs) throws SQLException {
         int id = rs.getInt("id_usu");
         String usu = rs.getString("nombre_usu");
@@ -80,6 +85,8 @@ public class UsuarioDao {
         return u;
     }
 
+    
+    // sacar el usuario teniendo en cuenta si es activo o no
     public Usuario obtenerUsuarioPorIDUsuario(int id) {
 
         String sentenciasql = "select u.id_usu, u.perfil, u.activo , u.nombre_usu, u.password_usu, u.email_usu from usuarios u where u.id_usu = ? and u.activo = 1";
@@ -97,6 +104,7 @@ public class UsuarioDao {
         return null;
     }
 
+    //como el nuevo usuario introduce no solo contraseña y correo, debemos hacer un doble insert de datos de Usuario y Trabajador
     public boolean introducirNuevoUsuarioTrabajador(Usuario usu, Trabajador tb, String password) {
         // como no sabes que ha introducido hay que decidir una consulta sql
         String insertTrasql = "";
@@ -206,7 +214,7 @@ public class UsuarioDao {
     public boolean updateContraseña(String contraseña, int id) {
         String updatesql = "update usuarios set password_usu = ? where id_usu = ?";
         try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement stmtusuario = con.prepareStatement(updatesql);) {
-
+// si la contraseña llega aqui la transformamos antes de cambiarla en la base de datos
             String nuevacontraseña = PasswordUtil.hashPassword(contraseña);
             stmtusuario.setString(1, nuevacontraseña);
             stmtusuario.setInt(2, id);
@@ -224,6 +232,7 @@ public class UsuarioDao {
         return false;
     }
 
+    //sacar tanto datos de usuario y trabajador para ordenarlo de 10 en 10
     public ArrayList<Map<String, Object>> listaUsuarioPaginacion(int pagina) {
         int datos = pagina * 10;
         String selectsql = "select u.nombre_usu, concat(t.nombre_trab,' ',t.apellidos_trab ) as 'trabajador' , u.email_usu ,u.activo , u.perfil, t.NIF_Trab , t.TLF_emp, t.BajaLaboral,u.id_usu, t.id_trabajador    \n"
@@ -232,9 +241,9 @@ public class UsuarioDao {
                 + "limit ?, 10";
         try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement stmt = con.prepareStatement(selectsql);) {
             stmt.setInt(1, datos);
-            ResultSet rs = stmt.executeQuery();
-            ArrayList<Map<String, Object>> tabla = new ArrayList<>();
-            while (rs.next()) {
+            ResultSet rs = stmt.executeQuery();// pasas el select
+            ArrayList<Map<String, Object>> tabla = new ArrayList<>(); // creas el array para la tabla que se vera en html
+            while (rs.next()) {//sacas cada dato por columna con clave para meter en un map
                 Map<String, Object> fila = new HashMap<>();
                 fila.put("usuario", rs.getString("nombre_usu"));
                 fila.put("trabajador", rs.getString("trabajador"));
@@ -246,7 +255,7 @@ public class UsuarioDao {
                 fila.put("baja", rs.getBoolean("BajaLaboral"));
                 fila.put("idusuario", rs.getInt("id_usu"));
                 fila.put("idtrabajador", rs.getInt("id_trabajador"));
-                tabla.add(fila);
+                tabla.add(fila);// añade a cada posicion del array una fila del resultado
             }
             return tabla;
         } catch (SQLException sqle) {
@@ -257,6 +266,8 @@ public class UsuarioDao {
         return null;
     }
 
+    
+    //cuentas la cantidad de usuarios de tu base de datos
     public int contarUsuarios() {
         String selectsql = "select COUNT(*) as 'numero'\n"
                 + "from usuarios u \n"
@@ -274,6 +285,7 @@ public class UsuarioDao {
         return 0;
     }
 
+    //sacar los datos del usuario correspondiente para que el admin pueda editarlos
     public Usuario obtenerconIDUsuarioParaEditar(int id) {
 
         String sentenciasql = "select u.perfil, u.activo , u.nombre_usu, u.password_usu, u.email_usu from usuarios u where u.id_usu = ?";

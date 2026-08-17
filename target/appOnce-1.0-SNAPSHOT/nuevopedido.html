@@ -18,121 +18,27 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <form action="ServletPedidos" method="post">
             <h3>Cupones</h3> <!-- repite lo mismo que con nueva incidencia, deberia solo necesitar 1 li cambiando todo lo que ponga su nombre y en cantidades el id del producto -->
             <ul>
+                {{#cupon}}
+
                 <li>
-                    <label for="Lunes">Lunes</label>
-                    <input type="checkbox" id="Lunes" name="ProductoCupon" value="1">
-                    <input type="number" name="cantidades_1" min="1" max="10" value="1">
+                    <label for="{{nombreCupon}}">{{nombreCupon}}</label>
+                    <input type="checkbox" id="{{nombreCupon}}" name="ProductoCupon" value="{{idcupon}}"> <!-- esto es el id de cada producto que enviaremos al servlet -->
+                    <input type="number" name="cantidades_{{idcupon}}" min="1" max="10" value="1">  <!-- marcamos cada cantidad con su id correspondiente -->
                 </li>
-                <li>
-                    <label for="Martes">Martes</label>
-                    <input type="checkbox" id="Martes" name="ProductoCupon" value="2"> <!-- esto es el id de cada producto que enviaremos al servlet -->
-                    <input type="number" name="cantidades_2" min="1" max="10" value="1">  <!-- marcamos cada cantidad con su id correspondiente -->
-                </li>
-                <li>
-                    <label for="Miércoles">Miércoles</label>
-                    <input type="checkbox" id="Miércoles" name="ProductoCupon" value="3">
-                    <input type="number" name="cantidades_3" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="Jueves">Jueves</label>
-                    <input type="checkbox" id="Jueves" name="ProductoCupon" value="4">
-                    <input type="number" name="cantidades_4" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="Viernes">Viernes</label>
-                    <input type="checkbox" id="Viernes" name="ProductoCupon" value="5">
-                    <input type="number" name="cantidades_5" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="Sábado">Sábado</label>
-                    <input type="checkbox" id="Sábado" name="ProductoCupon" value="6">
-                    <input type="number" name="cantidades_6" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="Domingo">Domingo</label>
-                    <input type="checkbox" id="Domingo" name="ProductoCupon" value="7">
-                    <input type="number" name="cantidades_7" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="Extra">Extra</label>
-                    <input type="checkbox" id="Extra" name="ProductoCupon" value="8">
-                    <input type="number" name="cantidades_8" min="1" max="10" value="1">
-                </li>
-                
+
+                {{/cupon}}
             </ul>
             <h3>Rascas</h3>
             <ul>
+                {{#rasca}}
+
                 <li>
-                    <label for="Rasca_de_la_Liga">Rasca de la Liga</label>
-                    <input type="checkbox" id="Rasca_de_la_Liga" name="productosrasca" value="1">
-                    <input type="number" name="cantidades_1" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="Fortuna_VIP">Fortuna VIP</label>
-                    <input type="checkbox" id="Fortuna_VIP" name="productosrasca" value="2">                   
-                    <input type="number" name="cantidades_2" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="Sueldazo_10">Sueldazo 50</label>
-                    <input type="checkbox" id="Sueldazo_10" name="productosrasca" value="3">                   
-                    <input type="number" name="cantidades_3" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="El_Dorado_Millón">El Dorado Millón</label>
-                    <input type="checkbox" id="El_Dorado_Millón" name="productosrasca" value="4">
-                    <input type="number" name="cantidades_4" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="Mini_Fortuna">Mini Fortuna</label>
-                    <input type="checkbox" id="Mini_Fortuna" name="productosrasca" value="5">
-                    <input type="number" name="cantidades_5" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="Caza_Tesoros">Caza Tesoros</label>
-                    <input type="checkbox" id="Caza_Tesoros" name="productosrasca" value="6">
-                    <input type="number" name="cantidades_6" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="Premium_20">Premium 20</label>
-                    <input type="checkbox" id="Premium_20" name="productosrasca" value="7">
-                    <input type="number" name="cantidades_7" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="Zafiro_Extra">Zafiro Extra</label>
-                    <input type="checkbox" id="Zafiro_Extra" name="productosrasca" value="8">
-                    <input type="number" name="cantidades_8" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="Platinium">Platinium</label>
-                    <input type="checkbox" id="Platinium" name="productosrasca" value="9">
-                    <input type="number" name="cantidades_9" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="Sueldazo_50">Sueldazo 50</label>
-                    <input type="checkbox" id="Sueldazo_50" name="productosrasca" value="10">
-                    <input type="number" name="cantidades_10" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="Diamante_Puro">Diamante Puro</label>
-                    <input type="checkbox" id="Diamante_Puro" name="productosrasca" value="11">
-                    <input type="number" name="cantidades_11" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="Gran_Oro">Gran Oro</label>
-                    <input type="checkbox" id="Gran_Oro" name="productosrasca" value="12">
-                    <input type="number" name="cantidades_12" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="X10_Rápido">X10 Rápido</label>
-                    <input type="checkbox" id="X10_Rápido" name="productosrasca" value="13">
-                    <input type="number" name="cantidades_13" min="1" max="10" value="1">
-                </li>
-                <li>
-                    <label for="Mega_Millonario">Mega Millonario</label>
-                    <input type="checkbox" id="Mega_Millonario" name="productosrasca" value="14">
-                    <input type="number" name="cantidades_14" min="1" max="10" value="1">
+                    <label for="{{nombreRasca}}">{{nombreRasca}}</label>
+                    <input type="checkbox" id="{{nombreRasca}}" name="productosrasca" value="{{idrasca}}">
+                    <input type="number" name="cantidades_{{idrasca}}" min="1" max="10" value="1">
                 </li>
 
+                {{/rasca}}
             </ul>
             <button type="submit">😃</button>
             <button type="reset">😣</button>

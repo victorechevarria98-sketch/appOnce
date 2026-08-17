@@ -53,19 +53,6 @@ public class ServletNuevaIncidencia extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        response.setContentType("text/html;charset=UTF-8");
-//        try (PrintWriter out = response.getWriter()) {
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet ServletNuevaIncidencia</title>");
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet ServletNuevaIncidencia at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
-//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -102,8 +89,7 @@ public class ServletNuevaIncidencia extends HttpServlet {
         
         Incidencias id = new Incidencias();
         Lugar lg = new Lugar();
-        
-        
+           
         String tipo = request.getParameter("incident").trim();
         id.setTipoIncident(tipo);
         String comentario = request.getParameter("comentario").trim();

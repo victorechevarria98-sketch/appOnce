@@ -20,7 +20,7 @@ public class IncidenciasDao {
     public IncidenciasDao() {
     }
 
-    public boolean nuevaIncidencia(Incidencias in, Lugar lg) {
+    public boolean nuevaIncidencia(Incidencias in, Lugar lg) { // como no tenia al principio idlugar, lo tengo por separado, revisa mas tarde
         String insertincidenciasql = "insert into incidencias (\n"
                 + "tipo_incident,\n"
                 + "comentario,\n"
@@ -39,7 +39,7 @@ public class IncidenciasDao {
             stmtinicdencia.setObject(3, in.getFechaIncident());
             stmtinicdencia.setInt(4, in.getIdtrab());
             stmtinicdencia.setInt(7,idlugar);
-            if (in.getIdrasca() != 0) {
+            if (in.getIdrasca() != 0) {//como la incidencia es de cupon o rasca hay que mirar que hemos recibido y si cualde las 2 es
                 stmtinicdencia.setInt(5, in.getIdrasca());
             } else {
                 stmtinicdencia.setNull(5, java.sql.Types.INTEGER);

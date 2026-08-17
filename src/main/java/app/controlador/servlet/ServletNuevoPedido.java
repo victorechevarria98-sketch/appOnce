@@ -49,18 +49,7 @@ public class ServletNuevoPedido extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-//        try (PrintWriter out = response.getWriter()) {
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet ServletPedidos</title>");
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet ServletPedidos at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
-//        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -92,7 +81,7 @@ public class ServletNuevoPedido extends HttpServlet {
         HttpSession sesion = request.getSession(false);
         Usuario usu = (Usuario) sesion.getAttribute("usuario");
         String emailusuario = usu.getEmailUsu();
-        // como puedes  escojer mas de un producto a la vez, guardas en un array todos los id que hemos recibido en cada option
+        // como puedes  escojer mas de un producto a la vez, guardas en un array todos los id que hemos recibido en cada li
         String[] pedidocupon = request.getParameterValues("ProductoCupon");
         if (pedidocupon != null) {// compruebas que ha escojido un cupon 
             for (String cupon : pedidocupon) {

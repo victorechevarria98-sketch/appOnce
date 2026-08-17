@@ -4,7 +4,6 @@
  */
 package app.modelo.dao;
 
-import app.modelo.entidad.Cupon;
 import app.modelo.entidad.PedidoCupon;
 import app.modelo.entidad.Trabajador;
 import java.sql.Connection;
@@ -13,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +26,7 @@ public class PedidoCuponDao {
     public PedidoCuponDao() {
     }
 
+    //introducir un nuevo pedido con la fecha de ahora 
     public boolean insertarPedidoCuponPorTrabajador(int idcupon, int cantidad, String emailusuario) {
 
         String insertsql = "insert into pedidocupon (\n"
@@ -103,6 +102,7 @@ public class PedidoCuponDao {
         return null;
     }
 
+    // esta lista es para comprobar si el nombre que se extrae de un formulario coincide con alguno de la base de datos
     public ArrayList<String> listaCuponNombre() {
         String consultasql = "select c.nombre_cupon \n"
                 + "from cupon c ";

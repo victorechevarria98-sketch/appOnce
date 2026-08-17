@@ -15,13 +15,17 @@ eliminar algo de lo anterior
  */
 package app.controlador.servlet;
 
+import app.modelo.dao.CuponDao;
 import app.modelo.dao.LugarDao;
 import app.modelo.dao.PedidoCuponDao;
 import app.modelo.dao.PedidoRascaDao;
+import app.modelo.dao.RascaDao;
 import app.modelo.dao.TrabajadorDao;
 import app.modelo.dao.UsuarioDao;
 import app.modelo.entidad.Aviso;
+import app.modelo.entidad.Cupon;
 import app.modelo.entidad.Lugar;
+import app.modelo.entidad.Rasca;
 import app.modelo.entidad.Trabajador;
 import app.modelo.entidad.Usuario;
 import app.vista.mustache.RenderVista;
@@ -57,6 +61,8 @@ public class ServletLecturaNombre extends HttpServlet {
     private LugarDao lugarDao;
     private PedidoRascaDao pedidoRascaDao;
     private PedidoCuponDao pedidoCuponDao;
+    private RascaDao rascaDao;
+    private CuponDao cuponDao;
 
     @Override
     public void init() {
@@ -65,6 +71,8 @@ public class ServletLecturaNombre extends HttpServlet {
         lugarDao = new LugarDao();
         pedidoRascaDao = new PedidoRascaDao();
         pedidoCuponDao = new PedidoCuponDao();
+        rascaDao = new RascaDao();
+        cuponDao = new CuponDao();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -95,9 +103,10 @@ public class ServletLecturaNombre extends HttpServlet {
         // se mete para usarlo en mustache por html
         String dueñosesion = usu.getNombreUsu();
         usuario.put("dueñosesion", dueñosesion);
-
+        ArrayList<Rasca> listarasca = new ArrayList<>();
+        ArrayList<Cupon> listacupon = new ArrayList<>();
         switch (vista) {
-/*            
+            /*            
 
             
             
@@ -105,11 +114,19 @@ hay que hacer un cambio en nuevo pedido y nueva incidencia para que el formulari
             
 
             
-            */
-            case "nuevopedido":            
+             */
+            case "nuevopedido":
+                listarasca = rascaDao.ListaRasca();
+                listacupon = cuponDao.listaCupon();
+                usuario.put("rasca", listarasca);
+                usuario.put("cupon", listacupon);
                 RenderVista.renderizarVista(response, getServletContext().getRealPath("nuevopedido.html"), usuario);
                 break;
             case "nuevaincidencia":
+                listarasca = rascaDao.ListaRasca();
+                listacupon = cuponDao.listaCupon();
+                usuario.put("rasca", listarasca);
+                usuario.put("cupon", listacupon);
                 RenderVista.renderizarVista(response, getServletContext().getRealPath("nuevaincidencia.html"), usuario);
                 break;
             case "tuperfil":

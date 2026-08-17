@@ -21,11 +21,34 @@ public class CuponDao {
     public CuponDao() {
     }
 
+    public ArrayList<Cupon> listaCupon() {
+        String selectsql = "select c.id_cupon,c.nombre_cupon , c.preciocupon \n"
+                + "from cupon c";
+        try (Connection con = ConexionDBOnce.Conexiondb(); Statement st = con.createStatement();) {
+            ResultSet rs = st.executeQuery(selectsql);
+            ArrayList<Cupon> lista = new ArrayList<>();
+            while (rs.next()) {
+                Cupon c = new Cupon();
+                c.setIdcupon(rs.getInt("id_cupon"));
+                c.setNombreCupon(rs.getString("nombre_cupon"));
+                c.setPrecioCupon(rs.getDouble("preciocupon"));
+                lista.add(c);
+            }
+            return lista;
+        } catch (SQLException sqle) {
+            System.out.println("Error! listaCupon" + sqle.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error! listaCupon" + e.getMessage());
+        }
+        return null;
+    }
+
+    // sacar di, nombre y precio de 5 en 5 para paginacion
     public ArrayList<Cupon> obtenerCuponPaginacion(int pagina) {
         String selectsql = "select c.id_cupon,c.nombre_cupon , c.preciocupon \n"
                 + "from cupon c \n"
                 + "limit ?, 5";
-        int datos = pagina * 5;
+        int datos = pagina * 5;// transformas la pagina en el dato desde donde empiezas la nueva pagina
         try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement stmt = con.prepareStatement(selectsql);) {
             stmt.setInt(1, datos);
             ResultSet rs = stmt.executeQuery();
@@ -46,6 +69,7 @@ public class CuponDao {
         return null;
     }
 
+    //calculas el total de filas, o en otras alabras cuantos tipos de cupones hay
     public int totalCupon() {
         String selectsql = "select count(*) as 'numero'\n"
                 + "from cupon c ";
@@ -59,9 +83,10 @@ public class CuponDao {
         } catch (Exception e) {
             System.out.println("Error! totalCupon" + e.getMessage());
         }
-        return 0;
+        return 0;// es un int por lo cual no hay null sino 0
     }
 
+    //update datos de un producto concreto
     public boolean editarCupon(Cupon c) {
         String updatesql = "update cupon set nombre_cupon = ?, preciocupon = ? where id_cupon = ?";
         try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement stmtcupon = con.prepareStatement(updatesql);) {
@@ -101,6 +126,7 @@ public class CuponDao {
         return false;
     }
 
+    //nuevo cupon con nombre y precio
     public boolean insertarCupon(Cupon c) {
         String deletesql = "insert into cupon(\n"
                 + "nombre_cupon,\n"
@@ -110,7 +136,7 @@ public class CuponDao {
         try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement pstmt = con.prepareStatement(deletesql)) {
             pstmt.setString(1, c.getNombreCupon());
             pstmt.setDouble(1, c.getPrecioCupon());
-            
+
             int filas = pstmt.executeUpdate();
             if (filas == 1) {
                 return true;

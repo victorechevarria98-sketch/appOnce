@@ -5,7 +5,6 @@
 package app.modelo.dao;
 
 import app.modelo.entidad.PedidoRasca;
-import app.modelo.entidad.Rasca;
 import app.modelo.entidad.Trabajador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,6 +26,7 @@ public class PedidoRascaDao {
     public PedidoRascaDao() {
     }
 
+    // ten en cuenta que la fecha es en el momento del insert y que esta funcion es de cuando la entidad pedido rasca estaba incompleta
     public boolean insertarPedidoRascaPorTrabajador(int idrasca, int cantidad, String emailusuario) {
 
         String insertsql = "insert into pedidorasca (\n"
@@ -102,6 +102,7 @@ public class PedidoRascaDao {
         return null;
     }
 
+    //sacar el id con el nombre del producto
     public int obtenerIdRasca(String producto) {
         String selectsql = "select r.id_rasca \n"
                 + "from rasca r \n"

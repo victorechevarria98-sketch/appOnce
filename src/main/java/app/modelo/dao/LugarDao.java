@@ -19,7 +19,8 @@ public class LugarDao {
 
     public LugarDao() {
     }
-
+    
+    
     public ArrayList<Lugar> obtenerLugarCompletoPoremail(String emailusuario) {
         String selectsql = "select l.id_lugar, l.calle, l.cod_postal, l.municipio, l.id_trabajador     \n"
                 + "from lugar l \n"
@@ -44,7 +45,9 @@ public class LugarDao {
         return null;
 
     }
-
+    
+    
+// para no tener que introducir todas las variables de la clase lugar cada vez que vas a obtener una tabla por rs
     public Lugar mapResultSet(ResultSet rs) throws SQLException {
         int id = rs.getInt("id_lugar");
         String calle = rs.getString("calle");
@@ -56,6 +59,8 @@ public class LugarDao {
         lg.setIdlugar(id);
         return lg;
     }
+    
+    
 
     public Lugar obtenerLugarCompletoPorIDLugar(int id) {
         String selectsql = "select l.id_lugar, l.calle, l.municipio, l.cod_postal, l.id_trabajador     \n"
@@ -79,6 +84,7 @@ public class LugarDao {
 
     }
 
+    //solo sacar el id en el caso de tener la calle y el codigo postal para poder usarla en nuevo lugar
     public int obtenerIdlugarCodPostalCalle(String calle, int codpostal) {
         String selectsql = "select l.id_lugar \n"
                 + "from lugar l \n"
@@ -101,7 +107,9 @@ public class LugarDao {
         }
         return 0;
     }
-
+    
+    
+//si el lugar existe, no crearia un nuevo lugar sino que devuleve el id del match
     public int nuevoLugar(Lugar lg) {
         String insertlugarsql = "insert into lugar (\n"
                 + "calle,\n"
@@ -109,11 +117,11 @@ public class LugarDao {
                 + "cod_postal,\n"
                 + "id_trabajador\n"
                 + ") values (?,?,?,?)";
-        int idlugar = idlugar = obtenerIdlugarCodPostalCalle(lg.getCalle(), lg.getCodPostal());
+        int idlugar = idlugar = obtenerIdlugarCodPostalCalle(lg.getCalle(), lg.getCodPostal());//calcular que id debemos usar
         int filaslugar = 0;
         try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement stmtlugar = con.prepareStatement(insertlugarsql);) {
 
-            if (idlugar == 0) {
+            if (idlugar == 0) {// si el id no existe insert nuevo lugar
                 stmtlugar.setString(1, lg.getCalle());
                 stmtlugar.setString(2, lg.getMunicipio());
                 stmtlugar.setInt(3, lg.getCodPostal());
@@ -121,7 +129,7 @@ public class LugarDao {
                 filaslugar = stmtlugar.executeUpdate();
             }
 
-            if (filaslugar == 1) {
+            if (filaslugar == 1) {// si hay ya un lugara con esas caracteristicas devuelve el id
                 idlugar = obtenerIdlugarCodPostalCalle(lg.getCalle(), lg.getCodPostal());
                 return idlugar;
             }
@@ -151,6 +159,7 @@ public class LugarDao {
         return false;
     }
 
+    //update con el id del lugar
     public boolean updatelugar(Lugar lg) {
         String updatesql = "update lugar set calle = ?, municipio = ?, cod_postal = ? where id_lugar = ?";
         try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement stmtlugar = con.prepareStatement(updatesql);) {

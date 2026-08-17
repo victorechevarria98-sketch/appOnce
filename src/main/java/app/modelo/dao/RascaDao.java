@@ -21,6 +21,29 @@ public class RascaDao {
     public RascaDao() {
     }
 
+    public ArrayList<Rasca> ListaRasca() {
+        String selectsql = "select r.id_rasca ,r.nombre_rasca , r.preciorasca \n"
+                + "from rasca r";
+        try (Connection con = ConexionDBOnce.Conexiondb(); Statement st = con.createStatement();) {
+            ResultSet rs = st.executeQuery(selectsql);
+            ArrayList<Rasca> lista = new ArrayList<>();
+            while (rs.next()) {
+                Rasca r = new Rasca();
+                r.setIdrasca(rs.getInt("id_rasca"));
+                r.setNombreRasca(rs.getString("nombre_rasca"));
+                r.setPrecioRasca(rs.getDouble("preciorasca"));
+                lista.add(r);
+            }
+            return lista;
+        } catch (SQLException sqle) {
+            System.out.println("Error! ListaRasca" + sqle.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error! ListaRasca" + e.getMessage());
+        }
+        return null;
+    }
+
+    // calculas los siguientes 5 datos usando la pagina que estamos
     public ArrayList<Rasca> obtenerRascaPaginacion(int pagina) {
         String selectsql = "select r.id_rasca ,r.nombre_rasca , r.preciorasca \n"
                 + "from rasca r \n"
@@ -31,7 +54,7 @@ public class RascaDao {
             ResultSet rs = stmt.executeQuery();
             ArrayList<Rasca> lista = new ArrayList<>();
             while (rs.next()) {
-                Rasca r = new Rasca();
+            Rasca r = new Rasca();                
                 r.setIdrasca(rs.getInt("id_rasca"));
                 r.setNombreRasca(rs.getString("nombre_rasca"));
                 r.setPrecioRasca(rs.getDouble("preciorasca"));
@@ -46,6 +69,7 @@ public class RascaDao {
         return null;
     }
 
+//calculamos las filas o en este caso el nuemero de productos rascas distintos
     public int totalRasca() {
         String selectsql = "select count(*) as 'numero'\n"
                 + "from rasca r ";
@@ -111,7 +135,7 @@ public class RascaDao {
         try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement pstmt = con.prepareStatement(deletesql)) {
             pstmt.setString(1, r.getNombreRasca());
             pstmt.setDouble(1, r.getPrecioRasca());
-            
+
             int filas = pstmt.executeUpdate();
             if (filas == 1) {
                 return true;
