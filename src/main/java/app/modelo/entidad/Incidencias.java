@@ -17,24 +17,33 @@ public class Incidencias {
     private String comentario;
     private LocalDateTime fechaIncident;
     private int idtrab;
-    private int idrasca;
-    private int idcupon;
+    private int idpedidorasca;
+    private int idpedidocupon;
     private int idlugar;
+    private boolean solucionada;
 
     public Incidencias() {
     }
 
-    public Incidencias( String tipoIncident, String comentario, LocalDateTime fechaIncident, int idtrab, int idrasca, int idcupon, int idlugar) {
+    public Incidencias(int idincidencia, String tipoIncident, String comentario, LocalDateTime fechaIncident, int idtrab, int idpedidorasca, int idpedidocupon, int idlugar, boolean solucionada) {
+        this.idincidencia = idincidencia;
         this.tipoIncident = tipoIncident;
         this.comentario = comentario;
         this.fechaIncident = fechaIncident;
         this.idtrab = idtrab;
-        this.idrasca = idrasca;
-        this.idcupon = idcupon;
+        this.idpedidorasca = idpedidorasca;
+        this.idpedidocupon = idpedidocupon;
         this.idlugar = idlugar;
+        this.solucionada = solucionada;
     }
 
-    
+    public int getIdincidencia() {
+        return idincidencia;
+    }
+
+    public void setIdincidencia(int idincidencia) {
+        this.idincidencia = idincidencia;
+    }
 
     public String getTipoIncident() {
         return tipoIncident;
@@ -60,14 +69,6 @@ public class Incidencias {
         this.fechaIncident = fechaIncident;
     }
 
-    public int getIdincidencia() {
-        return idincidencia;
-    }
-
-    public void setIdincidencia(int idincidencia) {
-        this.idincidencia = idincidencia;
-    }
-
     public int getIdtrab() {
         return idtrab;
     }
@@ -76,20 +77,20 @@ public class Incidencias {
         this.idtrab = idtrab;
     }
 
-    public int getIdrasca() {
-        return idrasca;
+    public int getIdpedidorasca() {
+        return idpedidorasca;
     }
 
-    public void setIdrasca(int idrasca) {
-        this.idrasca = idrasca;
+    public void setIdpedidorasca(int idpedidorasca) {
+        this.idpedidorasca = idpedidorasca;
     }
 
-    public int getIdcupon() {
-        return idcupon;
+    public int getIdpedidocupon() {
+        return idpedidocupon;
     }
 
-    public void setIdcupon(int idcupon) {
-        this.idcupon = idcupon;
+    public void setIdpedidocupon(int idpedidocupon) {
+        this.idpedidocupon = idpedidocupon;
     }
 
     public int getIdlugar() {
@@ -100,11 +101,19 @@ public class Incidencias {
         this.idlugar = idlugar;
     }
 
-    @Override
-    public String toString() {
-        return "Incidencias{" + "idincidencia=" + idincidencia + ", tipoIncident=" + tipoIncident + ", comentario=" + comentario + ", fechaIncident=" + fechaIncident + ", idtrab=" + idtrab + ", idrasca=" + idrasca + ", idcupon=" + idcupon + ", idlugar=" + idlugar + '}';
+    public boolean isSolucionada() {
+        return solucionada;
     }
 
-   
+    public void setSolucionada(boolean solucionada) {
+        this.solucionada = solucionada;
+    }
+
+    @Override
+    public String toString() {
+        return "Incidencias{" + "idincidencia=" + idincidencia + ", tipoIncident=" + tipoIncident + ", comentario=" + comentario + ", fechaIncident=" + fechaIncident + ", idtrab=" + idtrab + ", idpedidorasca=" + idpedidorasca + ", idpedidocupon=" + idpedidocupon + ", idlugar=" + idlugar + ", solucionada=" + solucionada + '}';
+    }
+
+ 
    
 }

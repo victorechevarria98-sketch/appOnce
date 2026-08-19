@@ -47,6 +47,7 @@ public class CuponDao {
     public ArrayList<Cupon> obtenerCuponPaginacion(int pagina) {
         String selectsql = "select c.id_cupon,c.nombre_cupon , c.preciocupon \n"
                 + "from cupon c \n"
+                + "order by c.nombre_cupon desc\n"
                 + "limit ?, 5";
         int datos = pagina * 5;// transformas la pagina en el dato desde donde empiezas la nueva pagina
         try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement stmt = con.prepareStatement(selectsql);) {
@@ -150,4 +151,22 @@ public class CuponDao {
         return false;
     }
 
+    public int obtenerCuponPorNombre(String nombre) {
+        String selectsql = "select c.id_cupon \n"
+                + "from cupon c\n"
+                + "where nombre_cupon = ?";
+        try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement stmt = con.prepareStatement(selectsql);) {
+            stmt.setString(1, nombre);
+            ResultSet rs = stmt.executeQuery();            
+            if (rs.next()) {
+                return rs.getInt("id_cupon");
+            }
+
+        } catch (SQLException sqle) {
+            System.out.println("Error! obtenerCuponPorID" + sqle.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error! obtenerCuponPorID" + e.getMessage());
+        }
+        return 0;
+    }
 }

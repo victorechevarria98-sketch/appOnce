@@ -100,10 +100,10 @@ public class ServletNuevaIncidencia extends HttpServlet {
         //aqui compruebas como si fuera un substring cual de los dos casos cumple
         if(producto.startsWith("Cupones_", 0)){
             int idproducto = Integer.parseInt(producto.replace("Cupones_", ""));// con esto eliminas el texto mientras lo transformas a un int
-            id.setIdcupon(idproducto);
+            id.setIdpedidocupon(idproducto);
         } else {
             int idproducto = Integer.parseInt(producto.replace("Rascas_", ""));
-            id.setIdrasca(idproducto);
+            id.setIdpedidorasca(idproducto);
         }
         id.setIdtrab(tb.getIdtrab());
              

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Editar Incidencias</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="estilocss.css"/>
+    </head>
+    <body>
+        <h1>Editar Incidencias</h1>
+        <form action="ServletEdicion" method ="post"> <!-- viene de servleteditarincidencia -->
+            <h2>Bienvenido {{usuario.nombreusu}}, ¿Cual es el Problema?</h2>   
+
+            <label for="tipoincidencia"> tipo de incidencia :</label>
+            <input type="text" name="incident" value="{{incidencias.tipoIncident}}" id="tipoincidencia" maxlength="25" required>
+
+            <label for="comentario">Por favor escriba un resumen sobre cual ha sido la causa, daños, cuanto tiempo ha pasado, etc....</label>
+            <textarea id="comentario" name="comentario" rows="5" cols="40" style ="width: 600px; height: 150px" required>{{incidencias.comentario}}</textarea>
+
+            <label for="fecha"> Fecha y hora de la incidencia:</label>
+            <input type="datetime-local" name="fecha" value="{{incidencias.fechaIncident}}" id="fecha" required>
+
+            <label for="producto">Seleccione el producto afectado:</label>
+            <input type="hidden" name="productoanterior" value="{{productoactual}}">
+            <select id="producto" name="producto" required>
+                <option value="{{productoactual}}" disabled selected>{{productoactual}}</option> <!-- sera el producto ya elejido el nombre y el id -->  
+                <!-- Primera sublista: Cupones -->
+                {{#pedidoscupones}}
+                <optgroup label="Cupones"> <!-- envia lista y ponla dentro de un mustache de cupon con id dentro de value y el nombre en option como su nombre -->
+                    {{#cupon}}
+                    <option value="Cupones_{{idcupon}}">{{nombreCupon}}</option>
+                    {{/cupon}}
+                </optgroup>
+                {{/pedidoscupones}}
+                <!-- Segunda sublista: Rascas -->
+                {{#pedidosrasca}}
+                <optgroup label="Rascas"> <!-- envia lista y ponla dentro de un mustache de rasca con id dentro de value y el nombre en option como su nombre -->
+                    {{#rasca}}
+                    <option value="Rascas_{{idrasca}}">{{nombreRasca}}</option>
+                    {{/rasca}}
+                </optgroup>
+                {{/pedidosrasca}}
+
+            </select>
+            <label for="codigo_postal">Codigo postal del lugar:</label>
+            <input type="text" 
+                   id="codigo_postal" 
+                   name="codigo Postal" 
+                   placeholder="39001"
+                   pattern="[0-9]{5}" 
+                   maxlength="5" 
+                   value="{{lugar.codPostal}}"
+                   title="El código postal debe contener exactamente 5 dígitos numéricos."
+                   required>
+
+            <label for="municipio">Municipio</label> 
+            <!-- por comunidad y por pais mas tarde -->
+            <input type="hidden" name="municipioanterior" value="{{lugar.municipio}}"> 
+            <select id="municipio" name="municipio">  
+                <option value="{{lugar.municipio}}" disabled selected>{{lugar.municipio}}</option>
+                <option value="Barcelona">Barcelona</option>
+                <option value="Sevilla">Sevilla</option>
+                <option value="Valencia">Valencia</option>
+                <option value="Bilbao">Bilbao</option>
+                <option value="Zaragoza">Zaragoza</option>
+                <option value="Málaga">Málaga</option>
+                <option value="Ourense">Ourense</option>
+                <option value="Oviedo">Oviedo</option>
+                <option value="Valladolid">Valladolid</option>
+                <option value="Palma de Mallorca">Palma de Mallorca</option>
+                <option value="Santa Cruz de Tenerife">Santa Cruz de Tenerife</option>               
+            </select>
+
+            <label for="lugar">¿En que lugar ha ocurrido?(El lugar de trabajo o, si ibas a trabajar, a que estacionamiento te dirigias)</label>
+            <input type="text" name="lugar" value="{{lugar.calle}}" id="lugar" maxlength="100" required>
+
+            <label for="solucion">Tu incidencia ha sido arreglada:</label>
+            <select name="solucion" id="solucion" required>
+                {{#incidencias.solucionada}}
+                <option value="true" selected>Arreglado</option>
+                <option value="false">No arreglado</option>
+                {{/incidencias.solucionada}}
+                {{^incidencias.solucionada}}
+                <option value="true">Arreglado</option>
+                <option value="false" selected>No arreglado</option>
+                {{/incidencias.solucionada}}
+            </select>
+            <input type="hidden" name="pedidorasca" value="{{incidencias.idpedidorasca}}">
+            <input type="hidden" name="pedidocupon" value="{{incidencias.idpedidocupon}}">
+            <input type="hidden" name="idtrabajador" value="{{incidencias.idtrab}}">
+            <input type="hidden" name="idincidencia" value="{{idincidencia}}">
+            <input type="hidden" name="idlugar" value="{{lugar.idlugar}}">
+            <button type="submit" name ="vista" value="incidencia">😃</button>
+        </form>
+    </body>
+</html>

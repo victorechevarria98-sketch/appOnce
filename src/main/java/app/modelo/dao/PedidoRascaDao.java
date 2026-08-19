@@ -198,4 +198,44 @@ public class PedidoRascaDao {
         return false;
     }
 
+    public int obtenerIdRascaConIDPedido(int id) {
+        String selectsql = "select r.id_rasca \n"
+                + "from rasca r \n"
+                + "join pedidorasca p on p.id_rasca = r.id_rasca \n"
+                + "where p.id_pedidorasca = ?";
+        try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement pstmt = con.prepareStatement(selectsql)) {
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id_rasca");
+            }
+
+        } catch (SQLException sqle) {
+            System.out.println("Error! obtenerIdRascaConIDPedido" + sqle.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error! obtenerIdRascaConIDPedido" + e.getMessage());
+        }
+        return 0;
+    }
+
+    public boolean updateRascaEnPedido(int idpedido, int idrasca) {
+        String insertsql = "update pedidorasca set id_rasca = ? where id_pedidorasca = ?";
+        try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement stmtinsert = con.prepareStatement(insertsql);) {
+
+            stmtinsert.setInt(1, idrasca);
+            stmtinsert.setInt(2, idpedido);
+
+            int filas = stmtinsert.executeUpdate();
+
+            if (filas == 1) {
+                return true;
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Error! updateRascaEnPedido" + sqle.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error! updateRascaEnPedido" + e.getMessage());
+        }
+        return false;
+    }
 }
+

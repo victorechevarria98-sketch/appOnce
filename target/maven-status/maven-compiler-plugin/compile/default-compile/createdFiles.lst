@@ -34,4 +34,6 @@ app\controlador\servlet\ServletNuevoPedido.class
 app\modelo\entidad\Lugar.class
 app\modelo\dao\TrabajadorDao.class
 app\modelo\entidad\Cupon.class
+app\modelo\dao\ConexionPool.class
 app\modelo\dao\PedidoCuponDao.class
+app\controlador\servlet\ServletEditarIncidencia.class

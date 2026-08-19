@@ -117,7 +117,7 @@ public class LugarDao {
                 + "cod_postal,\n"
                 + "id_trabajador\n"
                 + ") values (?,?,?,?)";
-        int idlugar = idlugar = obtenerIdlugarCodPostalCalle(lg.getCalle(), lg.getCodPostal());//calcular que id debemos usar
+        int idlugar = obtenerIdlugarCodPostalCalle(lg.getCalle(), lg.getCodPostal());//calcular que id debemos usar
         int filaslugar = 0;
         try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement stmtlugar = con.prepareStatement(insertlugarsql);) {
 

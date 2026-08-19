@@ -221,4 +221,42 @@ public class PedidoCuponDao {
         return false;
     }
 
+    public int obtenerIdCuponConIDPedido(int id) {
+        String selectsql = "select c.id_cupon \n"
+                + "from cupon c \n"
+                + "join pedidocupon p on p.id_cupon = c.id_cupon \n"
+                + "where p.id_pedidocupon  = ?";
+        try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement pstmt = con.prepareStatement(selectsql)) {
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id_cupon");
+            }
+
+        } catch (SQLException sqle) {
+            System.out.println("Error! obtenerIdCupon" + sqle.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error! obtenerIdCupon" + e.getMessage());
+        }
+        return 0;
+    }
+    public boolean updateCuponEnPedido(int idpedido, int idcupon) {
+        String insertsql = "update pedidocupon set id_cupon = ? where id_pedidocupon = ?";
+        try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement stmtinsert = con.prepareStatement(insertsql);) {
+
+            stmtinsert.setInt(1, idcupon);
+            stmtinsert.setInt(2, idpedido);
+
+            int filas = stmtinsert.executeUpdate();
+
+            if (filas == 1) {
+                return true;
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Error! insertarCuponEnPedido" + sqle.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error! insertarCuponEnPedido" + e.getMessage());
+        }
+        return false;
+    }
 }

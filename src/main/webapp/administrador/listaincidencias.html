@@ -11,6 +11,74 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <link rel="stylesheet" href="estilocss.css"/>
     </head>
     <body>
-        <div>TODO write content</div>
+
+        <details>
+            <summary>Menú de Usuario</summary>
+            <div>
+                <ul>
+                    <li><a href="ServletPaginacion?vista=listapedidostotal&pagina=0">Lista de pedidos totales</a></li> <!-- NO ESTA HECHO -->
+                    <li><a href="ServletPaginacion?vista=listausuarios&pagina=0">Lista de Perfiles de Trabajadores</a></li> 
+                    <li><a href="ServletPaginacion?vista=listalugares&pagina=0">Lista de Lugares de trabajo</a></li> <!-- NO ESTA HECHO -->
+                    <li><a href="ServletPaginacion?vista=productos&pagina=inicio">Lista de Productos</a></li> 
+                    <li><a href="ServletLecturaNombre?vista=nuevaincidencia">Nueva Incidencia</a></li>
+                    <li><a href="ServletLecturaNombre?vista=nuevopedido">Nuevo Pedido</a></li>                    
+                    <li><a href="ServletUsuariosProductos?vista=nuevoproducto&pagina=inicio">Nuevo producto</a></li>
+                    <li><a href="ServletLecturaNombre?vista=tuperfil">Tu Perfil</a></li>
+                </ul>
+            </div>
+        </details>
+        <table>
+            <h2> Ultimas incidencias</h2>
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Comentario</th>
+                    <th>Fecha</th>
+                    <th>Trabajador</th>
+                    <th>Producto</th>
+                    <th>Solucionado</th>
+                    <th>Operaciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#tabla}}
+                <tr>
+                    <td>{{tipo}}</td>
+                    <td>{{comentario}}</td>
+                    <td>{{fecha}}</td>
+                    <td>{{nombretrabajador}}</td>
+                    {{#nombrecupon}}
+                    <td>{{nombrecupon}}</td>
+                    {{/nombrecupon}}
+                    {{^nombrecupon}}
+                    <td>{{nombrerasca}}</td>
+                    {{/nombrecupon}}
+                    <td>{{solucion}}</td>
+                    <td>
+                        <a href="ServletEditarIncidencia?vista=editar&idincidencia={{idincidencia}}">✏️Editar</a> 
+                        <a href="ServletEditarIncidencia?vista=eliminar&idincidencia={{idincidencia}}">🗑️Borrar</a>
+                    </td>
+                </tr>
+                {{/tabla}}
+                {{^tabla}}
+                <tr>
+                    <td colspan="6" class="no-data">No hay incidencias guardados.</td>
+                </tr>
+                {{/tabla}}
+            </tbody>
+        </table> 
+        <form action="ServletPaginacion" method="get">
+            {{#primera}}
+            <button type="submit" value="0" name="pagina">⏮️</button>
+            <button type="submit" value="anterior" name="pagina">⬅️</button>    
+            {{/primera}}
+            <input type="hidden" name="vista" value="listaincidencia">
+            <input type="hidden" name="paginaactual" value="{{pagina}}">
+            <input type="text" value=" Pag. {{pagina}}" disabled>
+            {{#ultima}}
+            <button type="submit" value="siguiente" name="pagina">➡️</button>
+            <button type="submit" value="ultimapagina" name="pagina">⏩</button>
+            {{/ultima}}
+        </form>
     </body>
 </html>

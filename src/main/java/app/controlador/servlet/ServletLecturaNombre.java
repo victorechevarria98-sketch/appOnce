@@ -167,7 +167,7 @@ hay que hacer un cambio en nuevo pedido y nueva incidencia para que el formulari
                     }
                     case "editartrabajador" -> {
                         usuario.put("casotrabajador", operacion);
-                        String id = request.getParameter("idtrabajador");
+                        String id = request.getParameter("idtrabajador");//trabajador a editar
                         Trabajador tb2 = new Trabajador();
                         //sacas todos los datos a editar y los envias al formulario
                         tb2 = trabajadorDao.obtenerTrabajadorCompletoPorIDTrabajador(Integer.parseInt(id));

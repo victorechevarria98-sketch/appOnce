@@ -238,6 +238,7 @@ public class UsuarioDao {
         String selectsql = "select u.nombre_usu, concat(t.nombre_trab,' ',t.apellidos_trab ) as 'trabajador' , u.email_usu ,u.activo , u.perfil, t.NIF_Trab , t.TLF_emp, t.BajaLaboral,u.id_usu, t.id_trabajador    \n"
                 + "from usuarios u \n"
                 + "join trabajador t on u.id_usu = t.id_usu\n"
+                + "order by u.nombre_usu desc\n"
                 + "limit ?, 10";
         try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement stmt = con.prepareStatement(selectsql);) {
             stmt.setInt(1, datos);

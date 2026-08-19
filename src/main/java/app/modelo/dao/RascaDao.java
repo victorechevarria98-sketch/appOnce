@@ -47,6 +47,7 @@ public class RascaDao {
     public ArrayList<Rasca> obtenerRascaPaginacion(int pagina) {
         String selectsql = "select r.id_rasca ,r.nombre_rasca , r.preciorasca \n"
                 + "from rasca r \n"
+                + "order by r.nombre_rasca desc\n"
                 + "limit ?, 5";
         int datos = pagina * 5;
         try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement stmt = con.prepareStatement(selectsql);) {
@@ -148,5 +149,23 @@ public class RascaDao {
         }
         return false;
 
+    }
+    public int obtenerRascaPorNombre(String nombre) {
+        String selectsql = "select r.id_rasca \n"
+                + "from rasca r\n"
+                + "where nombre_rasca = ?";
+        try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement stmt = con.prepareStatement(selectsql);) {
+            stmt.setString(1, nombre);
+            ResultSet rs = stmt.executeQuery();            
+            if (rs.next()) {
+                return rs.getInt("id_rasca");
+            }
+
+        } catch (SQLException sqle) {
+            System.out.println("Error! obtenerRascaPorID" + sqle.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error! obtenerRascaPorID" + e.getMessage());
+        }
+        return 0;
     }
 }
