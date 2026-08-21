@@ -69,7 +69,8 @@ public class PedidoCuponDao {
                 + "p.num_seriecupon as 'Numero de serie:',"
                 + "p.cant_pedidoC as 'pedido de:', "
                 + "c.preciocupon as 'precio:'\n"
-                + "from trabajador t join pedidocupon p on p.id_trabajador = t.id_trabajador \n"
+                + "from trabajador t \n"
+                + "left join pedidocupon p on p.id_trabajador = t.id_trabajador \n"
                 + "join cupon c  on c.id_cupon = p.id_cupon \n"
                 + "order by p.fecha_pedidocupon desc \n"
                 + "limit 5";
@@ -179,10 +180,10 @@ public class PedidoCuponDao {
                 //metemos en el map una clave y valor por cada columna de la fila
                 fila.put("TrabajadorNombre", rs.getString("nombre_trab"));
                 fila.put("TrabajadorApellidos", rs.getString("apellidos_trab"));
-                Timestamp fechalinea = rs.getTimestamp("fecha:");
+                Timestamp fechalinea = rs.getTimestamp("Fecha:");
                 //pasamos la fecha a un localdatetmie con el format pero en una sola lines
                 String fechaParaHtml = fechalinea.toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
-                fila.put("fechacupon", fechaParaHtml);
+                fila.put("fecha", fechaParaHtml);
                 fila.put("producto", rs.getString("Cupon:"));
                 fila.put("serie", rs.getString("Numero de serie:"));
                 fila.put("pedido", rs.getInt("pedido de:"));
@@ -240,6 +241,7 @@ public class PedidoCuponDao {
         }
         return 0;
     }
+
     public boolean updateCuponEnPedido(int idpedido, int idcupon) {
         String insertsql = "update pedidocupon set id_cupon = ? where id_pedidocupon = ?";
         try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement stmtinsert = con.prepareStatement(insertsql);) {
@@ -258,5 +260,62 @@ public class PedidoCuponDao {
             System.out.println("Error! insertarCuponEnPedido" + e.getMessage());
         }
         return false;
+    }
+
+    public ArrayList<Map<String, Object>> obtenerPedidoCuponPaginacion(int pagina) {
+        String selectsql = "SELECT "
+                + "p.id_pedidocupon, "
+                + "CONCAT(t.nombre_trab, ' ', t.apellidos_trab) AS `Trabajador:`, "
+                + "c.nombre_cupon AS `Cupon:`, "
+                + "p.num_seriecupon AS `Numero de serie:`, "
+                + "p.cant_pedidoC AS `pedido de:`, "
+                + "c.preciocupon AS `precio:`, "
+                + "p.fecha_pedidocupon as 'fecha:' "
+                + "FROM trabajador t "
+                + "JOIN pedidocupon p ON p.id_trabajador = t.id_trabajador "
+                + "JOIN cupon c ON c.id_cupon = p.id_cupon "
+                + "ORDER BY p.fecha_pedidocupon DESC "
+                + "LIMIT ?, 10";
+        int datos = pagina * 10;// transformas la pagina en el dato desde donde empiezas la nueva pagina
+        try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement stmt = con.prepareStatement(selectsql);) {
+            stmt.setInt(1, datos);
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<Map<String, Object>> lista = new ArrayList<>();
+            while (rs.next()) {
+                Map<String, Object> fila = new HashMap<>();
+                fila.put("id_pedidocupon", rs.getInt("id_pedidocupon"));
+                fila.put("Trabajador", rs.getString("Trabajador:"));
+                fila.put("Cupon", rs.getString("Cupon:"));
+                fila.put("serie", rs.getString("Numero de serie:"));
+                fila.put("pedido", rs.getInt("pedido de:"));
+                fila.put("precio", rs.getDouble("precio:"));
+                fila.put("fechacupon", rs.getString("fecha:"));
+                lista.add(fila);
+            }
+            return lista;
+        } catch (SQLException sqle) {
+            System.out.println("Error! obtenerPedidoCuponPaginacion" + sqle.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error! obtenerPedidoCuponPaginacion" + e.getMessage());
+        }
+        return null;
+    }
+
+    public int totalPedidoCupon() {
+        String selectsql = "SELECT COUNT(*) AS 'numero' FROM pedidocupon";
+
+        try (Connection con = ConexionDBOnce.Conexiondb(); Statement stmt = con.createStatement()) {
+
+            ResultSet rs = stmt.executeQuery(selectsql);
+            if (rs.next()) {
+                return rs.getInt("numero");
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Error! totalPedidoCupon: " + sqle.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error! totalPedidoCupon: " + e.getMessage());
+        }
+
+        return 0;
     }
 }

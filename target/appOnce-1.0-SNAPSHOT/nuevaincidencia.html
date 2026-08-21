@@ -11,6 +11,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <link rel="stylesheet" href="estilocss.css"/>
     </head>
     <body>
+        <h2> Menu Principal</h2>
+        <details>
+            <summary>Menú de Usuario</summary>
+            <div>
+                <ul>
+                    <li><a href="ServletMenuPrincipal">Menu principal</a></li>
+                    <li><a href="ServletLecturaNombre?vista=tuperfil">Tu Perfil</a></li>
+                </ul>
+            </div>
+        </details>
         <h1>Editar Incidencias</h1>
         <form action="ServletNuevaIncidencia" method ="post"> <!-- viene de servletlecturanombre editar -->
             <h2>Bienvenido {{nombreusu}}, ¿Cual es el Problema?</h2>   
@@ -38,7 +48,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <!-- Segunda sublista: Rascas -->
                 <optgroup label="Rascas"> <!-- envia lista y ponla dentro de un mustache de rasca con id dentro de value y el nombre en option como su nombre -->
                     {{#rasca}}
-                    <option value="Rascas_{{idrasca}}">{{nombreRasca}}</option>
+                    <option value="Rascas_{{idrasca}}">{{nombreRasca}}</option><!-- {{.}} sirve si los datos no tienen nombre, solo son elementos -->
                     {{/rasca}}
                 </optgroup>
 

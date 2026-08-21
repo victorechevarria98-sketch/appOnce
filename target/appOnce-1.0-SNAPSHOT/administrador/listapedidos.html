@@ -11,6 +11,120 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <link rel="stylesheet" href="estilocss.css"/>
     </head>
     <body>
-        <div>TODO write content</div>
-    </body>
+        <details>
+            <summary>Menú de Usuario</summary>
+            <div>
+                <ul>                 
+                    <li><a href="ServletPaginacion?vista=listausuarios&pagina=0">Lista de Perfiles de Trabajadores</a></li> <!-- NO ESTA HECHO -->
+                    <li><a href="ServletPaginacion?vista=listaincidencia&pagina=0">Lista de Incidencias</a></li> <!-- NO ESTA HECHO -->
+                    <li><a href="ServletPaginacion?vista=listalugares&pagina=0">Lista de Lugares de trabajo</a></li> <!-- NO ESTA HECHO -->
+                    <li><a href="ServletPaginacion?vista=productos&pagina=inicio">Lista de Productos</a></li> 
+                    <li><a href="ServletLecturaNombre?vista=nuevopedido">Nuevo Pedido</a></li>
+                    <li><a href="ServletLecturaNombre?vista=tuperfil">Tu Perfil</a></li>
+                </ul>
+            </div>
+        </details>     
+        {{#productocupon}}
+        <table>
+            <h2> Ultimos pedidos Cupones</h2>
+            <thead>
+                <tr>
+                    <th>Trabajador:</th>
+                    <th>Fecha:</th>
+                    <th>Cupon:</th>
+                    <th>Numero de serie:</th>
+                    <th>pedido de:</th>
+                    <th>precio:</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#tablacupon}}
+                <tr>
+                    <td>{{Trabajador}}</td>
+                    <td>{{fechacupon}}</td>
+                    <td>{{Cupon}}</td>
+                    <td>{{serie}}</td>
+                    <td>{{pedido}}</td>
+                    <td>{{precio}}</td>
+                    <td>
+                        <a href="ServletLecturaNombre?vista=editar&operacion=editarpedidocupon&idpedidocupon={{id_pedidocupon}}">✏️Editar</a> 
+                        <a href="ServletLecturaNombre?vista=eliminar&operacion=eliminarpedidocupon&idpedidocupon={{id_pedidocupon}}">🗑️Borrar</a>
+                    </td>
+                </tr>
+                {{/tablacupon}}
+                {{^tablacupon}}
+                <tr>
+                    <td colspan="6" class="no-data">No hay pedidos guardados.</td>
+                </tr>
+                {{/tablacupon}}
+            </tbody>
+        </table>
+        {{/productocupon}}
+        {{#productorasca}}
+        <table>
+            <thead>
+            <h2> Ultimos pedidos Rascas</h2>
+            <tr>
+                <th>Trabajador:</th>
+                <th>Fecha:</th>
+                <th>Rasca:</th>
+                <th>Numero de serie:</th>
+                <th>pedido de:</th>
+                <th>precio:</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#tablarasca}}
+            <tr>
+                <td>{{Trabajador}}</td>
+                <td>{{fecharasca}}</td>
+                <td>{{Rasca}}</td>
+                <td>{{serie}}</td>
+                <td>{{pedido}}</td>
+                <td>{{precio}}</td>
+                <td>
+                    <a href="ServletLecturaNombre?vista=editar&operacion=editarpedidorasca&idpedidorasca={{id_pedidorasca}}">✏️Editar</a> 
+                    <a href="ServletLecturaNombre?vista=eliminar&operacion=eliminarpedidorasca&idpedidorasca={{id_pedidorasca}}">🗑️Borrar</a>
+                </td>
+            </tr>
+            {{/tablarasca}}
+            {{^tablarasca}}
+            <tr>
+                <td colspan="4" class="no-data">No hay pedidos guardados.</td>
+            </tr>
+            {{/tablarasca}}
+        </tbody>
+    </table>
+    {{/productorasca}}
+    <form action="ServletPedidosOperaciones" method="get">
+        {{#primera}}
+        <button type="submit" value="0" name="pagina">⏮️</button>
+        <button type="submit" value="anterior" name="pagina">⬅️</button>    
+        {{/primera}}
+        {{#productocupon}}
+        <input type="hidden" name="tipoproducto" value="cupon">
+        {{/productocupon}}
+        {{#productorasca}}
+        <input type="hidden" name="tipoproducto" value="rasca">
+        {{/productorasca}}   
+        <input type="hidden" name="vista" value="listapedidostotal">
+        <input type="hidden" name="paginaactual" value="{{pagina}}">
+        <input type="text" value=" Pag. {{pagina}}" disabled>
+        {{#ultima}}
+        <button type="submit" value="siguiente" name="pagina">➡️</button>
+        <button type="submit" value="ultimapagina" name="pagina">⏩</button>
+        {{/ultima}}
+    </form>
+    <form action="ServletPedidosOperaciones" method="get">
+        {{#inicio}}
+        <h1>¿que lista quieres ver?</h1>
+        {{/inicio}}
+        <input type="hidden" value="listapedidostotal" name="vista">
+        <input type="hidden" value="0" name="pagina">
+        <button type="submit" value="rasca" name="tipoproducto">RASCA</button>
+        <button type="submit" value="cupon" name="tipoproducto">CUPON</button>
+    </form>
+</body>
 </html>

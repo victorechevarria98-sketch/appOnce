@@ -157,9 +157,9 @@ public class PedidoRascaDao {
             if (rs.next()) {
                 fila.put("TrabajadorNombre", rs.getString("nombre_trab"));
                 fila.put("TrabajadorApellidos", rs.getString("apellidos_trab"));
-                Timestamp fechalinea = rs.getTimestamp("fecha:");
+                Timestamp fechalinea = rs.getTimestamp("Fecha:");
                 String fechaParaHtml = fechalinea.toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
-                fila.put("fecharasca", fechaParaHtml);
+                fila.put("fecha", fechaParaHtml);
                 fila.put("producto", rs.getString("Rasca:"));
                 fila.put("serie", rs.getString("Numero de serie:"));
                 fila.put("pedido", rs.getInt("pedido de:"));
@@ -237,5 +237,69 @@ public class PedidoRascaDao {
         }
         return false;
     }
-}
 
+    public ArrayList<Map<String, Object>> obtenerPedidoRascaPaginacion(int pagina) {
+        String selectsql = "SELECT "
+                + "p.id_pedidorasca, "
+                + "CONCAT(t.nombre_trab, ' ', t.apellidos_trab) AS `Trabajador:`, "
+                + "r.nombre_rasca AS `Rasca:`, "
+                + "p.num_serierasca AS `Numero de serie:`, "
+                + "p.cant_pedidoR AS `pedido de:`, "
+                + "r.preciorasca AS `precio:`, "
+                + "p.fecha_pedidorasca as 'fecha:' "
+                + "FROM trabajador t "
+                + "left JOIN pedidorasca p ON p.id_trabajador = t.id_trabajador "
+                + "JOIN rasca r ON r.id_rasca = p.id_rasca "
+                + "ORDER BY p.fecha_pedidorasca DESC "
+                + "LIMIT ?, 10";
+
+        int datos = pagina * 10;
+
+        ArrayList<Map<String, Object>> lista = new ArrayList<>();
+
+        try (Connection con = ConexionDBOnce.Conexiondb(); PreparedStatement stmt = con.prepareStatement(selectsql)) {
+
+            stmt.setInt(1, datos);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Map<String, Object> fila = new HashMap<>();
+
+                fila.put("id_pedidorasca", rs.getInt("id_pedidorasca"));
+                fila.put("Trabajador", rs.getString("Trabajador:"));
+                fila.put("Rasca", rs.getString("Rasca:"));
+                fila.put("serie", rs.getString("Numero de serie:"));
+                fila.put("pedido", rs.getInt("pedido de:"));
+                fila.put("precio", rs.getDouble("precio:"));
+                fila.put("fecharasca", rs.getString("fecha:"));
+                lista.add(fila);
+            }
+            return lista;
+
+        } catch (SQLException sqle) {
+            System.out.println("Error! obtenerPedidoRascaPaginacion: " + sqle.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error! obtenerPedidoRascaPaginacion: " + e.getMessage());
+        }
+
+        return null;
+    }
+
+    public int totalPedidoRasca() {
+        String selectsql = "SELECT COUNT(*) AS 'numero' FROM pedidorasca";
+
+        try (Connection con = ConexionDBOnce.Conexiondb(); Statement stmt = con.createStatement()) {
+
+            ResultSet rs = stmt.executeQuery(selectsql);
+            if (rs.next()) {
+                return rs.getInt("numero");
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Error! totalPedidoRasca: " + sqle.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error! totalPedidoRasca: " + e.getMessage());
+        }
+
+        return 0;
+    }
+}

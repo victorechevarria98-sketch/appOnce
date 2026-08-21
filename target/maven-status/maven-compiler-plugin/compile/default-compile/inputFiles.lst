@@ -1,12 +1,14 @@
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\controlador\servlet\ServletEdicion.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\controlador\servlet\ServletEditarIncidencia.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\controlador\servlet\ServletEditarUsuarioYProducto.java
+C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\controlador\servlet\ServletFiltro.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\controlador\servlet\ServletLecturaNombre.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\controlador\servlet\ServletLogin.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\controlador\servlet\ServletMenuPrincipal.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\controlador\servlet\ServletNuevaIncidencia.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\controlador\servlet\ServletNuevoPedido.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\controlador\servlet\ServletPaginacion.java
+C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\controlador\servlet\ServletPedidosOperaciones.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\controlador\servlet\ServletUsuarioNuevo.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\modelo\dao\ConexionDBOnce.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\modelo\dao\ConexionPool.java

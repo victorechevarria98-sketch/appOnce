@@ -11,6 +11,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <link rel="stylesheet" href="estilocss.css"/>
     </head>
     <body>
+        <h2> Menu Principal</h2>
+        <details>
+            <summary>Menú de Usuario</summary>
+            <div>
+                <ul>
+                    <li><a href="ServletLecturaNombre?vista=tuperfil">Tu Perfil</a></li>
+                    <li><a href="ServletMenuPrincipal">Menu principal</a></li>
+                </ul>
+            </div>
+        </details>
         <h1>Editar Incidencias</h1>
         <form action="ServletEdicion" method ="post"> <!-- viene de servleteditarincidencia -->
             <h2>Bienvenido {{usuario.nombreusu}}, ¿Cual es el Problema?</h2>   
@@ -49,7 +59,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <label for="codigo_postal">Codigo postal del lugar:</label>
             <input type="text" 
                    id="codigo_postal" 
-                   name="codigo Postal" 
+                   name="codigo_postal" 
                    placeholder="39001"
                    pattern="[0-9]{5}" 
                    maxlength="5" 

@@ -11,7 +11,6 @@ import app.modelo.dao.RascaDao;
 import app.modelo.dao.UsuarioDao;
 import app.modelo.entidad.Aviso;
 import app.modelo.entidad.Cupon;
-import app.modelo.entidad.Incidencias;
 import app.modelo.entidad.Rasca;
 import app.modelo.entidad.Usuario;
 import app.vista.mustache.RenderVista;
@@ -88,17 +87,9 @@ public class ServletPaginacion extends HttpServlet {
                 RenderVista.renderizarVista(response, getServletContext().getRealPath("administrador/ListaLugares.html"), usuario);
                 break;
 
-            case "listapedidostotal":
-                RenderVista.renderizarVista(response, getServletContext().getRealPath("administrador/listapedidos.html"), usuario);
-                break;
-
-            case "pedidotrabajador":
-                RenderVista.renderizarVista(response, getServletContext().getRealPath("trabajador/listapedidostrabajador.html"), usuario);
-                break;
-
             case "listaincidencia":
                 //<li><a href="ServletPaginacion?vista=listaincidencia&pagina=0">Lista de Incidencias</a></li>
-                ArrayList<Map<String,Object>> tablaincidencias = new ArrayList<>();// tabla para las incidencias
+                ArrayList<Map<String, Object>> tablaincidencias = new ArrayList<>();// tabla para las incidencias
                 // total de filas o incidencias
                 int totalincidencias = incidenciasDao.contarIncidencias();
                 //total de paginas
@@ -140,7 +131,7 @@ public class ServletPaginacion extends HttpServlet {
                     usuario.put("ultima", true);
 
                 }
-                
+
                 usuario.put("pagina", paginabase);// esto siempre se tiene que enviar, solo cambia el contenido
                 usuario.put("tabla", tablaincidencias);
                 RenderVista.renderizarVista(response, getServletContext().getRealPath("administrador/listaincidencias.html"), usuario);
@@ -234,6 +225,7 @@ public class ServletPaginacion extends HttpServlet {
                             if (totalpaginasrasca > 1) { // si solo hay 5 no ncesitas siguiente pagina
                                 usuario.put("ultima", true);
                             }
+                            usuario.put("rasca", tablarasca);
                         } else {
                             usuario.put("productocupon", true);// te lleva al formulario cupon
                             tablacupon = cuponDao.obtenerCuponPaginacion(paginabase);// datos cupones
@@ -241,7 +233,7 @@ public class ServletPaginacion extends HttpServlet {
                             if (totalpaginascupon > 1) {
                                 usuario.put("ultima", true);//si no hay mas datos que 5 no necesitas boton siguiente
                             }
-
+                            usuario.put("cupon", tablacupon);
                         }
                         paginabase++;// aumentas la pagina en 1
                         break;
@@ -254,6 +246,7 @@ public class ServletPaginacion extends HttpServlet {
                             if (totalpaginasrasca > 1) {// si no hay mas que cinco datos
                                 usuario.put("primera", true);
                             }
+                            usuario.put("rasca", tablarasca);
                         } else {//si es cupon
                             usuario.put("productocupon", true);//formulario cupon
                             tablacupon = cuponDao.obtenerCuponPaginacion(totalpaginascupon - 1);//ultimos 5 datos
@@ -261,6 +254,7 @@ public class ServletPaginacion extends HttpServlet {
                             if (totalpaginascupon > 1) {
                                 usuario.put("primera", true);
                             }
+                            usuario.put("cupon", tablacupon);
                         }
                         break;
                     case "siguiente":// boton siguiente
@@ -271,12 +265,14 @@ public class ServletPaginacion extends HttpServlet {
                             if (!rascaDao.obtenerRascaPaginacion(paginabase + 1).isEmpty()) {// si no hay mas datos no necesitas boton siguiente
                                 usuario.put("ultima", true);
                             }
+                            usuario.put("rasca", tablarasca);
                         } else {// si es cupon
                             usuario.put("productocupon", true);
                             tablacupon = cuponDao.obtenerCuponPaginacion(paginabase); //pagina actual con datos siguiente
                             if (!cuponDao.obtenerCuponPaginacion(paginabase + 1).isEmpty()) {
                                 usuario.put("ultima", true);
                             }
+                            usuario.put("cupon", tablacupon);
                         }
                         paginabase++;// aumentas la pagina
                         usuario.put("primera", true);// guardas boton anterior 
@@ -289,20 +285,20 @@ public class ServletPaginacion extends HttpServlet {
                             if (rascaDao.obtenerRascaPaginacion(paginabase - 1) == null) {
                                 usuario.put("primera", true);
                             }
+                            usuario.put("rasca", tablarasca);
                         } else {
                             usuario.put("productocupon", true);
                             tablacupon = cuponDao.obtenerCuponPaginacion(paginabase);
                             if (cuponDao.obtenerCuponPaginacion(paginabase - 1) == null) {
                                 usuario.put("primera", true);
                             }
+                            usuario.put("cupon", tablacupon);
                         }
                         usuario.put("ultima", true);
                         break;
 
                 }
                 usuario.put("pagina", paginabase);
-                usuario.put("rasca", tablarasca);
-                usuario.put("cupon", tablacupon);
                 RenderVista.renderizarVista(response, getServletContext().getRealPath("administrador/listaproductos.html"), usuario);
                 break;
 

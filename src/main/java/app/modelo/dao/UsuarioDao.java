@@ -312,4 +312,35 @@ public class UsuarioDao {
         }
         return null;
     }
+    
+    public ArrayList<Map<String, Object>> listaUsuarioYTrabajador() {
+        String selectsql = "select u.nombre_usu, concat(t.nombre_trab,' ',t.apellidos_trab ) as 'trabajador' , u.email_usu ,u.activo , u.perfil, t.NIF_Trab , t.TLF_emp, t.BajaLaboral,u.id_usu, t.id_trabajador    \n"
+                + "from usuarios u \n"
+                + "join trabajador t on u.id_usu = t.id_usu\n"
+                + "order by u.nombre_usu desc";
+        try (Connection con = ConexionDBOnce.Conexiondb(); Statement stmt = con.createStatement();) {
+            ResultSet rs = stmt.executeQuery(selectsql);// pasas el select
+            ArrayList<Map<String, Object>> tabla = new ArrayList<>(); // creas el array para la tabla que se vera en html
+            while (rs.next()) {//sacas cada dato por columna con clave para meter en un map
+                Map<String, Object> fila = new HashMap<>();
+                fila.put("usuario", rs.getString("nombre_usu"));
+                fila.put("trabajador", rs.getString("trabajador"));
+                fila.put("email", rs.getString("email_usu"));
+                fila.put("cuentaactiva", rs.getBoolean("activo"));
+                fila.put("perfil", rs.getString("perfil"));
+                fila.put("DNI", rs.getString("NIF_Trab"));
+                fila.put("telefono", rs.getInt("TLF_emp"));
+                fila.put("baja", rs.getBoolean("BajaLaboral"));
+                fila.put("idusuario", rs.getInt("id_usu"));
+                fila.put("idtrabajador", rs.getInt("id_trabajador"));
+                tabla.add(fila);// añade a cada posicion del array una fila del resultado
+            }
+            return tabla;
+        } catch (SQLException sqle) {
+            System.out.println("Error! listaUsuarioYTrabajador" + sqle.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error! listaUsuarioYTrabajador" + e.getMessage());
+        }
+        return null;
+    }
 }

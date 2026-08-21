@@ -11,6 +11,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <link rel="stylesheet" href="estilocss.css"/>
     </head>
     <body>
+        <h2> Menu Principal</h2>
+        <details>
+            <summary>Menú de Usuario</summary>
+            <div>
+                <ul>
+                    <li><a href="ServletLecturaNombre?vista=tuperfil">Tu Perfil</a></li>
+                    <li><a href="ServletMenuPrincipal">Menu principal</a></li>
+                </ul>
+            </div>
+        </details>
         <h1>De acuerdo {{dueñosesion}}, ¿Que quieres hacer?</h1>
         {{#casotrabajador}}   <!-- servletlecturanombre, editar trabajador propio -->    
         <form action="ServletEdicion" method="post"> <!-- cambia servlet -->

@@ -13,6 +13,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +46,24 @@ public class TrabajadorDao {
         return String.format("%c%c-%02d-%04d", letra1, letra2, bloque1, bloque2);
     }
 
+    public ArrayList<Trabajador> seleccionListaTrabajadores() {
+        String selectsql = "SELECT id_trabajador, nombre_trab, apellidos_trab, NIF_Trab,fechaNa_trab, fechaIncor_trab, TLF_emp, BajaLaboral,tipokiosko, tipocontrato, tipoactividad, id_usu\n"
+                + "FROM trabajador";
+        try (Connection con = ConexionDBOnce.Conexiondb(); Statement stmt = con.createStatement();) {
+            ResultSet rs = stmt.executeQuery(selectsql);
+            ArrayList<Trabajador> lista = new ArrayList<>();
+            while (rs.next()) {
+                lista.add(mapResultSet(rs));
+            }
+            return lista;
+        } catch (SQLException sqle) {
+            System.out.println("Error! seleccionListaTrabajadores" + sqle.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error! seleccionListaTrabajadores" + e.getMessage());
+        }
+        return null;
+    }
+
     // trabajador relacionado cone el usuario de sesion para editar en mi perfil
     public Trabajador obtenerTrabajadorCompletoPorEmail(String emailusuario) {
         String selectsql = "select t.id_trabajador, t.nombre_trab,t.apellidos_trab,t.NIF_Trab, t.fechaNa_trab, t.fechaIncor_trab, t.TLF_emp,t.BajaLaboral, t.tipokiosko, t.tipocontrato, t.tipoactividad, t.id_usu\n"
@@ -65,8 +84,7 @@ public class TrabajadorDao {
         }
         return null;
     }
-    
-    
+
 //sacar todas las variables de trabajador y no tener que escribirlas cada vez
     public Trabajador mapResultSet(ResultSet rs) throws SQLException {
         int id = rs.getInt("id_trabajador");
@@ -77,16 +95,21 @@ public class TrabajadorDao {
         Date fechainicio = rs.getDate("fechaIncor_trab");
         int tlf = rs.getInt("TLF_emp");
         boolean baja = rs.getBoolean("BajaLaboral");
-        Kiosko kiosko = Kiosko.valueOf(rs.getString("tipokiosko"));//estas tres variables son enum asi que obtienes si tipokiosko de rs es igual a alguno de los posibles valores de Kiosko
-        Contrato contrato = Contrato.valueOf(rs.getString("tipocontrato"));
-        Actividad actividad = Actividad.valueOf(rs.getString("tipoactividad"));
+        String strKiosko = rs.getString("tipokiosko");
+        //estas tres variables son enum asi que obtienes si tipokiosko de rs es igual a alguno de los posibles valores de Kiosko
+        Kiosko kiosko = (strKiosko != null) ? Kiosko.valueOf(strKiosko) : null;
+
+        String strContrato = rs.getString("tipocontrato");
+        Contrato contrato = (strContrato != null) ? Contrato.valueOf(strContrato) : null;
+
+        String strActividad = rs.getString("tipoactividad");
+        Actividad actividad = (strActividad != null) ? Actividad.valueOf(strActividad) : null;
         int idusu = rs.getInt("id_usu");
         Trabajador tb = new Trabajador(nombre, apellido, nif, fechanacim, fechainicio, tlf, baja, kiosko, contrato, actividad, idusu);
         tb.setIdtrab(id);
         return tb;
     }
 
-    
     //para non sacar toda la tabla de trabajador
     public Trabajador obtenerIdTrabajadorPorEmail(String emailusuario) {
         String selectsql = "select t.id_trabajador \n"

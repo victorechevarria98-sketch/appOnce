@@ -8,6 +8,7 @@ app\controlador\servlet\ServletLecturaNombre.class
 app\controlador\servlet\ServletEdicion.class
 app\modelo\dao\pruebas.class
 app\controlador\servlet\ServletMenuPrincipal.class
+app\controlador\servlet\ServletPedidosOperaciones.class
 app\modelo\entidad\Incidencias.class
 app\modelo\entidad\Usuario.class
 app\modelo\entidad\Aviso.class
@@ -34,6 +35,7 @@ app\controlador\servlet\ServletNuevoPedido.class
 app\modelo\entidad\Lugar.class
 app\modelo\dao\TrabajadorDao.class
 app\modelo\entidad\Cupon.class
+app\controlador\servlet\ServletFiltro.class
 app\modelo\dao\ConexionPool.class
 app\modelo\dao\PedidoCuponDao.class
 app\controlador\servlet\ServletEditarIncidencia.class

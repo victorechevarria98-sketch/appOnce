@@ -334,7 +334,7 @@ public class ServletEdicion extends HttpServlet {
                 Lugar l = new Lugar();
                 l.setCalle(sitio);
                 // si no ha escojido nada recibimos null o vacio
-                l.setCodPostal(Integer.parseInt("postal"));
+                l.setCodPostal(Integer.parseInt(postal));
                 l.setIdtrab(Integer.parseInt(idtrabajadorincidencia));
                 if (municipioahora == null || municipioahora.isEmpty()) {
                     l.setMunicipio(municipioanterior);
@@ -352,7 +352,7 @@ public class ServletEdicion extends HttpServlet {
                 i.setIdlugar(idlugareditado);
                 i.setSolucionada(corregido);
                 // si lo que escribimos antes es distinto a lo que enviamos
-                if (productoeditado != null || !productoeditado.isEmpty()) {
+                if (productoeditado != null && !productoeditado.isEmpty()) {
                     int idproducto = 0;
                     int idsacado = 0;
                     // Es un cupon?
@@ -370,7 +370,7 @@ public class ServletEdicion extends HttpServlet {
                             }
                         }
                         //guardamos el id del pedido
-                        i.setIdpedidocupon(idsacado);
+                        i.setIdpedidocupon(Integer.parseInt(idcuponpedido));
                         i.setIdpedidorasca(0);
                     } else {
                         // sacamos el id del producto y comparamos si es el mismo que habia en el pedido
@@ -384,7 +384,7 @@ public class ServletEdicion extends HttpServlet {
                                 break;
                             }
                         }
-                        i.setIdpedidorasca(idsacado);
+                        i.setIdpedidorasca(Integer.parseInt(idrascapedido));
                         i.setIdpedidocupon(0);
                     }
                     i.setIdincidencia(Integer.parseInt(id));

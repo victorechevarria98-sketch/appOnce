@@ -13,6 +13,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <link rel="stylesheet" href="estilocss.css"/>
     </head>
     <body>
+        <h2> Menu Principal</h2>
+        <details>
+            <summary>Menú de Usuario</summary>
+            <div>
+                <ul>
+                    <li><a href="ServletMenuPrincipal">Menu principal</a></li>
+                    <li><a href="ServletLecturaNombre?vista=tuperfil">Tu Perfil</a></li>
+                </ul>
+            </div>
+        </details>
         <h1>Nuevo pedido</h1>
         <h2>Bienvenido {{nombreusu}}, Introduzca los datos de su nuevo pedido </h2> <!-- viene de servletlecturanombre editar -->
         <form action="ServletPedidos" method="post">
