@@ -37,10 +37,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <input type="datetime-local" id="fechapedido" name="fechapedido" value="{{formulario.fecha}}" required>
 
             <label for="serie">Introduce el numero de serie:</label>
-            <input type="text" id="serie" name="serie" value="{{formulario.serie}}" maxlength="11" required>
+            <input type="text" id="serie" name="serie" placeholder="RL-05-3342" 
+                   title="Formato válido: Letra+Alfanumérico seguido de dos bloques numéricos (ej. RL-05-3342 o X1-05-3342)" 
+                   pattern="[A-Z][A-Z0-9](-\d{2,4}){2}" value="{{formulario.serie}}" maxlength="11" required>
 
             <label for="cantidad">Cantidades:</label>
-            <input type="number" name="cantidad" min="1" max="10" value="{{formulario.pedido}}" required> 
+            <input type="number" name="cantidad" id="cantidad" min="1" max="10" value="{{formulario.pedido}}" required> 
 
             <label for="precio">Precio (€):</label>
             <input type="number" id="precio" name="precio" min="0" placeholder="0.50" value="{{formulario.precio}}" readonly>
@@ -63,7 +65,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <input type="text" id="serie" name="serie" value="{{formulario.serie}}" maxlength="11" readonly>
 
             <label for="cantidad">Cantidades:</label>
-            <input type="number" name="cantidad" min="1" max="10" value="{{formulario.pedido}}" required> 
+            <input type="number" name="cantidad" id="cantidad" min="1" max="10" value="{{formulario.pedido}}" required> 
 
             <label for="precio">Precio (€):</label>
             <input type="number" id="precio" name="precio" min="0" placeholder="0.50" value="{{formulario.precio}}" readonly>

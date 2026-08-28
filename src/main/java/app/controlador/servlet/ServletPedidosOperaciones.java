@@ -4,8 +4,12 @@
  */
 package app.controlador.servlet;
 
+import app.modelo.dao.CuponDao;
 import app.modelo.dao.PedidoCuponDao;
 import app.modelo.dao.PedidoRascaDao;
+import app.modelo.dao.RascaDao;
+import app.modelo.entidad.Cupon;
+import app.modelo.entidad.Rasca;
 import app.modelo.entidad.Usuario;
 import app.vista.mustache.RenderVista;
 import java.io.IOException;
@@ -37,11 +41,15 @@ public class ServletPedidosOperaciones extends HttpServlet {
      */
     private PedidoRascaDao pedidoRascaDao;
     private PedidoCuponDao pedidoCuponDao;
+    private RascaDao rascaDao;
+    private CuponDao cuponDao;
 
     @Override
     public void init() {
         pedidoRascaDao = new PedidoRascaDao();
         pedidoCuponDao = new PedidoCuponDao();
+        rascaDao = new RascaDao();
+        cuponDao = new CuponDao();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -169,9 +177,24 @@ public class ServletPedidosOperaciones extends HttpServlet {
                         break;
 
                 }
-                    usuario.put("pagina", paginabase);
-                    usuario.put("tablarasca", tablarasca);
-                    usuario.put("tablacupon", tablacupon);
+                usuario.put("pagina", paginabase);
+                usuario.put("tablarasca", tablarasca);
+                usuario.put("tablacupon", tablacupon);
+                if (pag.equals("inicio")) {
+                    usuario.put("filtro", false);
+                } else {
+                    usuario.put("filtro", true);
+                }
+                if (usuario.containsKey("productocupon")) {
+                    ArrayList<Cupon> listacupon = new ArrayList<>();
+                    listacupon = cuponDao.listaCupon();
+                    usuario.put("cupon", listacupon);
+
+                } else if (usuario.containsKey("productorasca")) {
+                    ArrayList<Rasca> listarasca = new ArrayList<>();
+                    listarasca = rascaDao.ListaRasca();
+                    usuario.put("rasca", listarasca);
+                }
 
                 RenderVista.renderizarVista(response, getServletContext().getRealPath("administrador/listapedidos.html"), usuario);
                 break;

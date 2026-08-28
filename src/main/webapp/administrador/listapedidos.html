@@ -15,6 +15,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <summary>Menú de Usuario</summary>
             <div>
                 <ul>                 
+                    <li><a href="ServletPedidosOperaciones?vista=listapedidostotal&pagina=inicio">Lista de pedidos totales</a></li> 
                     <li><a href="ServletPaginacion?vista=listausuarios&pagina=0">Lista de Perfiles de Trabajadores</a></li> <!-- NO ESTA HECHO -->
                     <li><a href="ServletPaginacion?vista=listaincidencia&pagina=0">Lista de Incidencias</a></li> <!-- NO ESTA HECHO -->
                     <li><a href="ServletPaginacion?vista=listalugares&pagina=0">Lista de Lugares de trabajo</a></li> <!-- NO ESTA HECHO -->
@@ -23,7 +24,133 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <li><a href="ServletLecturaNombre?vista=tuperfil">Tu Perfil</a></li>
                 </ul>
             </div>
-        </details>     
+        </details> 
+        {{#filtro}}
+        <form action="ServletFiltro" method="post">
+            <h1>Filtro Pedidos</h1>
+
+            <h2>Nombre del producto:</h2>
+            <label for="producto">Seleccione el producto afectado:</label>
+            {{#productocupon}}
+            <input type="hidden" name="tipo" value="cupon">
+            <select id="producto" name="producto" required>
+                <option value="" disabled selected>-- Seleccione una opción --</option>
+                {{#cupon}}
+                    <option value="{{nombreCupon}}">{{nombreCupon}}</option>
+                {{/cupon}}
+            </select>
+            {{/productocupon}}
+            {{#productorasca}}
+            <input type="hidden" name="tipo" value="rasca">
+            <select id="producto" name="producto" required>
+                <option value="" disabled selected>-- Seleccione una opción --</option>
+                {{#rasca}}
+                  <option value="{{nombreRasca}}">{{nombreRasca}}</option><!-- {{.}} sirve si los datos no tienen nombre, solo son elementos -->               
+                {{/rasca}}
+            </select>
+            {{/productorasca}} 
+            <h2>Apellidos trabajador</h2>
+            <label for="apellidos">Por favor, escribe un apellido</label>
+            <input type="text" name="apellidos" id="apellidos" maxlength="20">
+
+            <h2>Nombre trabajador</h2>
+            <label for="nombre">Por favor, escoje un nombre</label>
+            <input type="text" name="nombre" id="nombre" maxlength="50">
+
+            <h2>Fecha del pedido</h2>
+            <label for="fechainicio">Fecha Mínima</label>
+            <input type="datetime-local" id="fechainicio" name="fechainicio">
+
+            <label for="fechafinal">Fecha Máxima</label>
+            <input type="datetime-local" id="fechafinal" name="fechafinal">
+
+            <h2>Numero de serie</h2>
+            <label for="serie">Introduce el numero de serie:</label>
+            <input type="text" id="serie" pattern="[A-Z][A-Z0-9](-\d{2,4}){2}" placeholder="RL-05-3342" 
+                   title="Formato válido: Letra+Alfanumérico seguido de dos bloques numéricos (ej. RL-05-3342 o X1-05-3342)" 
+                   name="serie" maxlength="11" >
+
+            <h2>Cantidad del Pedido</h2>
+            <label for="cantidadmin">Cantidad mínima</label>
+            <input type="number" name="cantidadmin" min="1" max="10" id="cantidadmin">
+
+            <label for="cantidadmax">Cantidad máxima</label>
+            <input type="number" name="cantidadmax" min="1" max="10" id="cantidadmax">
+
+            <h2>Precio del producto</h2>
+            <label for="preciomin">Precio mínimo (€):</label>
+            <input type="number" id="preciomin" name="preciomin" min="0.50" step ="0.10" placeholder="0.50">
+
+            <label for="preciomax">Precio máximo (€):</label>
+            <input type="number" id="preciomax" name="preciomax" min="0.50" step ="0.10" placeholder="0.50">
+
+            <h2>Municipio</h2>
+            <label for="municipio">¿Cual es el municipio donde ha ocurrido el incidente?</label> 
+            <!-- por comunidad y por pais mas tarde -->
+            <select id="municipio" name="municipio">
+                <option value="" disabled selected>-- Seleccione una opción --</option>
+                <option value="Barcelona">Barcelona</option>
+                <option value="Sevilla">Sevilla</option>
+                <option value="Valencia">Valencia</option>
+                <option value="Bilbao">Bilbao</option>
+                <option value="Zaragoza">Zaragoza</option>
+                <option value="Málaga">Málaga</option>
+                <option value="Ourense">Ourense</option>
+                <option value="Oviedo">Oviedo</option>
+                <option value="Valladolid">Valladolid</option>
+                <option value="Palma de Mallorca">Palma de Mallorca</option>
+                <option value="Santa Cruz de Tenerife">Santa Cruz de Tenerife</option>               
+            </select>
+
+            <h2>Codigo postal</h2>
+            <label for="codigo_postal">Escribe el codigo postal</label>
+            <input type="text" 
+                   id="codigo_postal" 
+                   name="CodPostal" 
+                   placeholder="39001"
+                   pattern="[0-9]{5}" 
+                   maxlength="5" 
+                   title="El código postal debe contener exactamente 5 dígitos numéricos.">
+
+            <h2>Movilidad puesto de trabajo</h2>
+            <label for="tipokiosko">Selecciona si el puesto de trabajo es fijo o portatil:</label>
+            <select name="tipokiosko" id="tipokiosko"> 
+                <option value="" disabled selected>-- Seleccione una opción --</option>
+                <option value="fijo">fijo</option>
+                <option value="movil">portatil</option>
+            </select>
+
+            <h2>Tipo de contrato</h2>
+            <label for="tipocontrato">Selecciona si el contrato es indefinido o temporal:</label>
+            <select name="tipocontrato" id="tipocontrato">
+                <option value="" disabled selected>-- Seleccione una opción --</option>
+                <option value="indefinido">indefinido</option>
+                <option value="temporal">temporal</option>
+            </select>
+
+            <h2>Tipo de lugar de trabajo</h2>
+            <label for="tipoactividad">Selecciona si el lugar de trabajo va a ser permanente o provisional:</label>
+            <select name="tipoactividad" id="tipoactividad">
+                <option value="" disabled selected>-- Seleccione una opción --</option>
+                <option value="permanente">permanente</option>
+                <option value="cambiable">provisional</option>
+            </select>
+
+            <h2>Perfil trabajador</h2>
+            <label for="perfil">Selecciona un perfil:</label>       
+            <select name="perfil" id="perfil">
+                <option value="" disabled selected>-- Seleccione una opción --</option>
+                <option value="admin">Administrador</option>
+                <option value="trabajador">Vendedor</option>
+            </select>
+
+            <button type="submit">Filtrar</button>
+        </form>
+        {{/filtro}}
+
+        {{#lugar}}
+        <h2>Municipio: {{municipio}}</h2>
+        {{/lugar}}
         {{#productocupon}}
         <table>
             <h2> Ultimos pedidos Cupones</h2>
@@ -42,14 +169,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 {{#tablacupon}}
                 <tr>
                     <td>{{Trabajador}}</td>
-                    <td>{{fechacupon}}</td>
-                    <td>{{Cupon}}</td>
+                    <td>{{fecha}}</td>
+                    <td>{{producto}}</td>
                     <td>{{serie}}</td>
                     <td>{{pedido}}</td>
                     <td>{{precio}}</td>
                     <td>
-                        <a href="ServletLecturaNombre?vista=editar&operacion=editarpedidocupon&idpedidocupon={{id_pedidocupon}}">✏️Editar</a> 
-                        <a href="ServletLecturaNombre?vista=eliminar&operacion=eliminarpedidocupon&idpedidocupon={{id_pedidocupon}}">🗑️Borrar</a>
+                        <a href="ServletLecturaNombre?vista=editar&operacion=editarpedidocupon&idpedidocupon={{idPedidoCupon}}">✏️Editar</a> 
+                        <a href="ServletLecturaNombre?vista=eliminar&operacion=eliminarpedidocupon&idpedidocupon={{idPedidoCupon}}">🗑️Borrar</a>
                     </td>
                 </tr>
                 {{/tablacupon}}
@@ -79,8 +206,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             {{#tablarasca}}
             <tr>
                 <td>{{Trabajador}}</td>
-                <td>{{fecharasca}}</td>
-                <td>{{Rasca}}</td>
+                <td>{{fecha}}</td>
+                <td>{{producto}}</td>
                 <td>{{serie}}</td>
                 <td>{{pedido}}</td>
                 <td>{{precio}}</td>
@@ -95,6 +222,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <td colspan="4" class="no-data">No hay pedidos guardados.</td>
             </tr>
             {{/tablarasca}}
+             {{#tablafiltro}}
+            <tr>
+                <td>{{combinacion}}</td>
+                <td>{{fechaPedido}}</td>
+                <td>{{nombreProducto}}</td>
+                <td>{{numeroSerie}}</td>
+                <td>{{cantidad}}</td>
+                <td>{{precio}}</td>
+                <td>
+                    <a href="ServletLecturaNombre?vista=editar&operacion=editarpedidorasca&idpedidorasca={{id_pedidorasca}}">✏️Editar</a> 
+                    <a href="ServletLecturaNombre?vista=eliminar&operacion=eliminarpedidorasca&idpedidorasca={{id_pedidorasca}}">🗑️Borrar</a>
+                </td>
+            </tr>
+            {{/tablafiltro}}
+            {{^tablafiltro}}
+            <tr>
+                <td colspan="4" class="no-data">No hay pedidos guardados.</td>
+            </tr>
+            {{/tablafiltro}}
         </tbody>
     </table>
     {{/productorasca}}
@@ -126,5 +272,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <button type="submit" value="rasca" name="tipoproducto">RASCA</button>
         <button type="submit" value="cupon" name="tipoproducto">CUPON</button>
     </form>
+    <a href="ServletPaginacion?vista=listausuarios&pagina=0">Volver</a>
 </body>
 </html>

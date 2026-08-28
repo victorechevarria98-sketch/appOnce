@@ -84,6 +84,7 @@ public class ServletPaginacion extends HttpServlet {
 
         switch (vista) {
             case "listalugar":
+                
                 RenderVista.renderizarVista(response, getServletContext().getRealPath("administrador/ListaLugares.html"), usuario);
                 break;
 

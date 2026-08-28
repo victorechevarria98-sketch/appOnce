@@ -267,11 +267,11 @@ public class PedidoRascaDao {
 
                 fila.put("id_pedidorasca", rs.getInt("id_pedidorasca"));
                 fila.put("Trabajador", rs.getString("Trabajador:"));
-                fila.put("Rasca", rs.getString("Rasca:"));
+                fila.put("producto", rs.getString("Rasca:"));
                 fila.put("serie", rs.getString("Numero de serie:"));
                 fila.put("pedido", rs.getInt("pedido de:"));
                 fila.put("precio", rs.getDouble("precio:"));
-                fila.put("fecharasca", rs.getString("fecha:"));
+                fila.put("fecha", rs.getString("fecha:"));
                 lista.add(fila);
             }
             return lista;

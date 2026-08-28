@@ -13,6 +13,7 @@ C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\controlado
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\modelo\dao\ConexionDBOnce.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\modelo\dao\ConexionPool.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\modelo\dao\CuponDao.java
+C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\modelo\dao\FiltroDao.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\modelo\dao\IncidenciasDao.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\modelo\dao\LugarDao.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\modelo\dao\PedidoCuponDao.java
@@ -24,6 +25,7 @@ C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\modelo\dao
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\modelo\entidad\Aviso.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\modelo\entidad\Bajas.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\modelo\entidad\Cupon.java
+C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\modelo\entidad\Filtro.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\modelo\entidad\Incidencias.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\modelo\entidad\Lugar.java
 C:\Users\Alumnos\Documents\NetBeansProjects\appOnce\src\main\java\app\modelo\entidad\PedidoCupon.java

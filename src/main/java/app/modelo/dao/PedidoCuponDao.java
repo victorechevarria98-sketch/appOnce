@@ -283,13 +283,13 @@ public class PedidoCuponDao {
             ArrayList<Map<String, Object>> lista = new ArrayList<>();
             while (rs.next()) {
                 Map<String, Object> fila = new HashMap<>();
-                fila.put("id_pedidocupon", rs.getInt("id_pedidocupon"));
+                fila.put("idPedidoCupon", rs.getInt("id_pedidocupon"));
                 fila.put("Trabajador", rs.getString("Trabajador:"));
-                fila.put("Cupon", rs.getString("Cupon:"));
+                fila.put("producto", rs.getString("Cupon:"));
                 fila.put("serie", rs.getString("Numero de serie:"));
                 fila.put("pedido", rs.getInt("pedido de:"));
                 fila.put("precio", rs.getDouble("precio:"));
-                fila.put("fechacupon", rs.getString("fecha:"));
+                fila.put("fecha", rs.getString("fecha:"));
                 lista.add(fila);
             }
             return lista;
