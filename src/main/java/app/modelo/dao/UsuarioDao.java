@@ -30,7 +30,7 @@ public class UsuarioDao {
 //saca todos los usuarios sin tener en cuenta si estan activos o no en la aplicacion
     public ArrayList<Usuario> seleccionTodosuariosAbsoluta() {
         String selectsql = "select u.id_usu, u.perfil, u.activo , u.nombre_usu, u.password_usu, u.email_usu from usuarios u ";
-        try (Connection con = ConexionDBOnce.Conexiondb(); Statement stmt = con.createStatement();) {
+        try (Connection con = ConexionPool.getConnection(); Statement stmt = con.createStatement();) {
             ResultSet rs = stmt.executeQuery(selectsql);
             ArrayList<Usuario> lista = new ArrayList<>();
             while (rs.next()) {

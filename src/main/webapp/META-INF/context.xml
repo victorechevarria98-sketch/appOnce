@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/appOnce"/>
+<Context path="/appOnce">
+<Resource name="jdbc/bd_gestonceDB"
+auth="Container"
+type="javax.sql.DataSource"
+maxTotal="20"
+maxIdle="10"
+minIdle="5"
+maxWaitMillis="10000"
+username="victor"
+password="944393094"
+driverClassName="com.mysql.cj.jdbc.Driver"
+url="jdbc:mysql://localhost:3306/bd_gestonce?useSSL=true&amp;serverTimezone=UTC"/>
+</Context>
